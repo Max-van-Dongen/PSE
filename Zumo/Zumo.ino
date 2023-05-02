@@ -13,6 +13,7 @@ Zumo32U4Buzzer buzzer;
 #define NUM_SENSORS 5
 unsigned int lineSensorValues[NUM_SENSORS];
 bool runLines = false;
+int motorSpeed = 0.5;
 void calibrateSensors()
 {
 
@@ -55,67 +56,80 @@ void loop() {
     char incomingChar = Serial1.read(); // Read the incoming byte
     buzzer.play("g32");
     Serial.print(incomingChar); // Print the incoming byte on the Serial Monitor
-  }
-  // put your main code here, to run repeatedly:
-  if (buttonA.isPressed())
-  {
-    // Whenever the button is pressed, turn on the yellow LED.
-    runLines = !runLines;
-    if (runLines) {
-      buzzer.play("g32");
-    } else {
-      buzzer.play("e32");
+    switch (incomingChar) {
+      case 'w':
+        motors.setSpeeds(400, 400);
+        break;
+      case 'a':
+        motors.setSpeeds(-400, 400);
+        break;
+      case 's':
+        motors.setSpeeds(-400, -400);
+        break;
+      case 'd':
+        motors.setSpeeds(400, -400);
+        break;
+      case 'e':
+        motors.setSpeeds(0, 0);
+        break;
+      case 'q':
+        motors.setSpeeds(0, 400);
+        runLines = !runLines;
+        if (runLines) {
+          buzzer.play("g32");
+        } else {
+          buzzer.play("e32");
+        }
+        break;
     }
   }
+  // put your main code here, to run repeatedly:
+  //  if (buttonA.getSingleDebouncedPress())
+  //  {
+  //    // Whenever the button is pressed, turn on the yellow LED.
+  //    runLines = !runLines;
+  //    if (runLines) {
+  //      buzzer.play("g32");
+  //    } else {
+  //      buzzer.play("e32");
+  //    }
+  //  }
 
-  //  if (buttonB.isPressed())
-  //  {
-  //    // Whenever the button is pressed, turn on the yellow LED.
-  //    motors.setLeftSpeed(40);
-  //    motors.setRightSpeed(40);
-  //  }
-  //
-  //  if (buttonC.isPressed())
-  //  {
-  //    // Whenever the button is pressed, turn on the yellow LED.
-  //    motors.setLeftSpeed(0);
-  //    motors.setRightSpeed(40);
-  //  }
-  //  if (!buttonC.isPressed() && !buttonB.isPressed() && !buttonA.isPressed())
-  //  {
-  //    motors.setLeftSpeed(0);
-  //    motors.setRightSpeed(0);
-  //
-  //  }
   uint8_t left = lineSensorValues[0];
   uint8_t middle = lineSensorValues[2];
   uint8_t right = lineSensorValues[4];
   lineSensors.readCalibrated(lineSensorValues);
   if (runLines) {
+    Serial1.println("Left: " + left);
+    Serial1.println("Middle: " + middle);
+    Serial1.println("Right: " + right);
     if (left > 800) {
       motors.setSpeeds(0, 400);
+      //      delay(500);
     }
 
     if (right > 800) {
+      Serial1.println("MOVE RIGHT!");
       motors.setSpeeds(400, 0);
+      //      delay(500);
     }
 
     if (middle > 800) {
+      Serial1.println("MOVE STRAIGHT!");
       motors.setSpeeds(400, 400);
+      //      delay(500);
     }
     if (left < 400 && middle < 400 && right < 400) {
-      motors.setSpeeds(400,-400);
+      Serial1.println("MOVE quququ!");
+      motors.setSpeeds(400, -400);
+      //      delay(500);
     }
   }
-  for (uint8_t i = 0; i < NUM_SENSORS; i++)
-  {
-    //    uint8_t barHeight = map(lineSensorValues[i], 0, 1000, 0, 8);
-    Serial1.println(lineSensorValues[i]);
-    //    Serial.println(lineSensors.readCalibrated(lineSensorValues[i]));
-    //    uint8_t  lines = lineSensors.readCalibrated(lineSensorValues[1]);
-    //    seri
-  }
+  //  for (uint8_t i = 0; i < NUM_SENSORS; i++)
+  //  {
+  //    Serial1.println(lineSensorValues[i]);
+  //  }
   //  Serial.println("POS: " + position);
   Serial1.println("end");
-  delay(100);
+  //  delay(100);
 }
