@@ -51,13 +51,16 @@ void loop() {
     Serial.print(incomingChar); // Print the incoming byte on the Serial Monitor
     switch (incomingChar) {
       case 'w':
+        motors.setSpeeds(200, 200);
+        break;
+      case 't':
         motors.setSpeeds(400, 400);
         break;
       case 'a':
         motors.setSpeeds(-200, 200);
         break;
       case 's':
-        motors.setSpeeds(-400, -400);
+        motors.setSpeeds(-200, -200);
         break;
       case 'd':
         motors.setSpeeds(200, -200);
