@@ -48,7 +48,7 @@ void loop() {
   if (Serial1.available()) { // Check if there is any incoming data
     char incomingChar = Serial1.read(); // Read the incoming byte
     buzzer.play("g32");
-    Serial.print(incomingChar); // Print the incoming byte on the Serial Monitor
+//    Serial.print(incomingChar); // Print the incoming byte on the Serial Monitor
     switch (incomingChar) {
       case 'w':
         motors.setSpeeds(200, 200);
@@ -60,7 +60,7 @@ void loop() {
         motors.setSpeeds(-200, 200);
         break;
       case 's':
-        motors.setSpeeds(-200, -200);
+        motors.setSpeeds(-200, -400);
         break;
       case 'd':
         motors.setSpeeds(200, -200);
@@ -84,6 +84,12 @@ void loop() {
         }
         break;
     }
+  }
+  if (buttonB.getSingleDebouncedPress()) {
+      motors.setSpeeds(200, 200);
+  }
+  if (buttonC.getSingleDebouncedPress()) {
+      motors.setSpeeds(0, 0);
   }
 
   if (runLines) {
