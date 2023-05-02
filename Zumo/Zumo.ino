@@ -24,11 +24,11 @@ void calibrateSensors()
   {
     if (i > 30 && i <= 90)
     {
-      motors.setSpeeds(-100, 100);
+      motors.setSpeeds(-200, 200);
     }
     else
     {
-      motors.setSpeeds(100, -100);
+      motors.setSpeeds(200, -200);
     }
 
     lineSensors.calibrate();
@@ -42,13 +42,6 @@ void setup() {
   Serial1.begin(9600);
   Serial1.println("BOOT");
   lineSensors.initFiveSensors();
-  Serial1.println("Sensors: Start");
-  lineSensors.calibrate();
-  Serial1.println("Sensors: Calibrate");
-
-  buttonA.waitForButton();
-  calibrateSensors();
-
 }
 
 void loop() {
@@ -61,16 +54,22 @@ void loop() {
         motors.setSpeeds(400, 400);
         break;
       case 'a':
-        motors.setSpeeds(-400, 400);
+        motors.setSpeeds(-200, 200);
         break;
       case 's':
         motors.setSpeeds(-400, -400);
         break;
       case 'd':
-        motors.setSpeeds(400, -400);
+        motors.setSpeeds(200, -200);
         break;
       case 'e':
         motors.setSpeeds(0, 0);
+        break;
+      case 'c':
+        Serial1.println("Sensors: Start");
+        lineSensors.calibrate();
+        Serial1.println("Sensors: Calibrate");
+        calibrateSensors();
         break;
       case 'q':
         motors.setSpeeds(0, 400);
@@ -83,23 +82,12 @@ void loop() {
         break;
     }
   }
-  // put your main code here, to run repeatedly:
-  //  if (buttonA.getSingleDebouncedPress())
-  //  {
-  //    // Whenever the button is pressed, turn on the yellow LED.
-  //    runLines = !runLines;
-  //    if (runLines) {
-  //      buzzer.play("g32");
-  //    } else {
-  //      buzzer.play("e32");
-  //    }
-  //  }
 
+  if (runLines) {
   uint8_t left = lineSensorValues[0];
   uint8_t middle = lineSensorValues[2];
   uint8_t right = lineSensorValues[4];
   lineSensors.readCalibrated(lineSensorValues);
-  if (runLines) {
     Serial1.println("Left: " + left);
     Serial1.println("Middle: " + middle);
     Serial1.println("Right: " + right);
@@ -125,11 +113,4 @@ void loop() {
       //      delay(500);
     }
   }
-  //  for (uint8_t i = 0; i < NUM_SENSORS; i++)
-  //  {
-  //    Serial1.println(lineSensorValues[i]);
-  //  }
-  //  Serial.println("POS: " + position);
-  Serial1.println("end");
-  //  delay(100);
 }
