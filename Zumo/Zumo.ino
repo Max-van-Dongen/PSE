@@ -48,25 +48,36 @@ void loop() {
   if (Serial1.available()) { // Check if there is any incoming data
     char incomingChar = Serial1.read(); // Read the incoming byte
     buzzer.play("g32");
-//    Serial.print(incomingChar); // Print the incoming byte on the Serial Monitor
+    //    Serial.print(incomingChar); // Print the incoming byte on the Serial Monitor
     switch (incomingChar) {
       case 'w':
         motors.setSpeeds(200, 200);
-        break;
-      case 't':
-        motors.setSpeeds(400, 400);
         break;
       case 'a':
         motors.setSpeeds(-200, 200);
         break;
       case 's':
-        motors.setSpeeds(-200, -400);
+        motors.setSpeeds(-200, -200);
         break;
       case 'd':
         motors.setSpeeds(200, -200);
         break;
+      case 'W':
+        motors.setSpeeds(400, 400);
+        break;
+      case 'A':
+        motors.setSpeeds(-400, 400);
+        break;
+      case 'S':
+        motors.setSpeeds(-400, -400);
+        break;
+      case 'D':
+        motors.setSpeeds(400, -400);
+        break;
       case 'e':
+      case 'E':
         motors.setSpeeds(0, 0);
+        runLines = false;
         break;
       case 'c':
         Serial1.println("Sensors: Start");
@@ -86,17 +97,17 @@ void loop() {
     }
   }
   if (buttonB.getSingleDebouncedPress()) {
-      motors.setSpeeds(200, 200);
+    motors.setSpeeds(200, 200);
   }
   if (buttonC.getSingleDebouncedPress()) {
-      motors.setSpeeds(0, 0);
+    motors.setSpeeds(0, 0);
   }
 
   if (runLines) {
-  uint8_t left = lineSensorValues[0];
-  uint8_t middle = lineSensorValues[2];
-  uint8_t right = lineSensorValues[4];
-  lineSensors.readCalibrated(lineSensorValues);
+    uint8_t left = lineSensorValues[0];
+    uint8_t middle = lineSensorValues[2];
+    uint8_t right = lineSensorValues[4];
+    lineSensors.readCalibrated(lineSensorValues);
     Serial1.println("Left: " + left);
     Serial1.println("Middle: " + middle);
     Serial1.println("Right: " + right);
