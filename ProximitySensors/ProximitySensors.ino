@@ -18,6 +18,7 @@ void setup()
 
 void printReadingsToSerial()
 {
+  Serial.print("Afstand: ");
   static char buffer[80];
   sprintf(buffer, "%d %d %d %d %d %d \n",
     proxSensors.countsLeftWithLeftLeds(),
@@ -29,8 +30,8 @@ void printReadingsToSerial()
   );
   Serial.print(buffer);
   
-  if (proxSensors.countsLeftWithLeftLeds() > 5) {
-  Serial.print("danger\n");
+  if ((proxSensors.countsLeftWithLeftLeds() > 5) || (proxSensors.countsLeftWithRightLeds() > 5)) {
+  Serial.print("COLLISION WARNING!!!\n");
   }
 
 }
@@ -49,10 +50,10 @@ void loop()
     printReadingsToSerial();
   }
 
-  if (proxSensors.countsFrontWithLeftLeds() < 5) {
+  if ((proxSensors.countsFrontWithLeftLeds() < 5) || (proxSensors.countsFrontWithRightLeds() < 5)) {
   motors.setSpeeds(200, 200);
   }
-  if (proxSensors.countsFrontWithLeftLeds() > 4) {
+  if ((proxSensors.countsFrontWithLeftLeds() > 4) || (proxSensors.countsFrontWithRightLeds() > 4)) {
   motors.setSpeeds(0, 0);
   }
 
