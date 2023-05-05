@@ -3,6 +3,7 @@
 
 
 
+
 Zumo32U4ButtonA buttonA;
 Zumo32U4ButtonB buttonB;
 Zumo32U4ButtonC buttonC;
@@ -29,6 +30,15 @@ bool proxLeftActive;
 bool proxFrontActive;
 bool proxRightActive;
 //End Of Distance Sensor Variables
+
+
+
+struct ArgVal {
+  String arg;
+  String val;
+};
+
+
 
 //Function to calibrate the sensors
 //Wait 1 second and then begin automatic sensor calibration
@@ -140,81 +150,177 @@ void DistanceTracking() {
       proxRightActive = proxSensors.readBasicRight();
       printReadingsToSerial();
 
-  if ((proxSensors.countsLeftWithLeftLeds() > 5) || (proxSensors.countsLeftWithRightLeds() > 5) || (proxSensors.countsRightWithLeftLeds() > 5) ||
-      (proxSensors.countsRightWithRightLeds() > 5) || (proxSensors.countsFrontWithLeftLeds() > 5) || (proxSensors.countsFrontWithRightLeds() > 5)) {
+      if ((proxSensors.countsLeftWithLeftLeds() > 5) || (proxSensors.countsLeftWithRightLeds() > 5) || (proxSensors.countsRightWithLeftLeds() > 5) ||
+          (proxSensors.countsRightWithRightLeds() > 5) || (proxSensors.countsFrontWithLeftLeds() > 5) || (proxSensors.countsFrontWithRightLeds() > 5)) {
         Serial1.println("COLLISION WARNING!!!");
       }
+    }
   }
 }
 //END OF DISTANCE SENSORS
 
+
+//INCOMING MESSAGES
+void InternalFunctions(String &var, String &arg) {
+  if (var == "AAA") {
+    buzzer.play("g32");
+    delay(arg.toInt());
+    buzzer.play("e32");
+
+  }
+  if (var == "BBB") {
+    buzzer.play("e32");
+    delay(arg.toInt());
+    buzzer.play("f32");
+  }
+  if (var == "w") {
+    motors.setSpeeds(arg.toInt(), arg.toInt());
+  }
+  if (var == "a") {
+    motors.setSpeeds(-arg.toInt(), arg.toInt());
+  }
+  if (var == "s") {
+    motors.setSpeeds(-arg.toInt(), -arg.toInt());
+  }
+  if (var == "d") {
+    motors.setSpeeds(arg.toInt(), -arg.toInt());
+  }
+  if (var == "e") {
+    motors.setSpeeds(0, 0);
+  }
+  if (var == "|") {
+    motors.setSpeeds(0, 0);
+    resetFunc();
+  }
+  if (var == "c") {
+    Serial1.println("Sensors: Start");
+    lineSensors.calibrate();
+    Serial1.println("Sensors: Calibrate");
+    calibrateSensors();
+  }
+  if (var == "q") {
+    runLines = !runLines;
+    if (runLines) {
+      buzzer.play("g32");
+      Serial1.println("Start Line Tracking");
+    } else {
+      buzzer.play("e32");
+      Serial1.println("Stop Line Tracking");
+    }
+  }
+  if (var == "l") {
+    if (runDistance) {
+      buzzer.play("g32");
+      Serial1.println("Start Distance Tracking");
+    } else {
+      buzzer.play("e32");
+      Serial1.println("Stop Distance Tracking");
+    }
+  }
+
+}
+
+String messagePart = "";
+bool receiving = false;
+bool beforesemicolon = true;
+String recievedVar = "";
+String recievedArg = "";
+void HandleSpecialMessages(const String &msg) {
+  if (msg.length() == 0) return;
+  if (msg == "*") {
+    receiving = !receiving;
+    Serial1.println("REC! " + (String)receiving);
+    if (!beforesemicolon) {
+      beforesemicolon = true;
+      recievedArg = messagePart;
+      messagePart = "";
+      Serial1.println(recievedVar);
+      Serial1.println(recievedArg);
+      InternalFunctions(recievedVar, recievedArg);
+    }
+    return;
+  }
+  if (msg == ":") {
+    beforesemicolon = !beforesemicolon;
+    Serial1.println("SEMI!" + (String)beforesemicolon);
+    recievedVar = messagePart;
+    messagePart = "";
+    return;
+  }
+  if (receiving) {
+  messagePart += msg;
+  }
+
+}
+//END OF INCOMING MESSAGES
 
 void loop() {
 
   //START OF REMOTE CONTROL
   if (Serial1.available()) { // Check if there is any incoming data
     char incomingChar = Serial1.read(); // Read the incoming byte
+    HandleSpecialMessages((String)incomingChar);
     buzzer.play("g32");
-    switch (incomingChar) {
-      case 'w'://Forward
-        motors.setSpeeds(200, 200);
-        break;
-      case 'a'://Left
-        motors.setSpeeds(-200, 200);
-        break;
-      case 's'://Back
-        motors.setSpeeds(-200, -200);
-        break;
-      case 'd'://Right
-        motors.setSpeeds(200, -200);
-        break;
-      case 'W'://Fast Forward
-        motors.setSpeeds(400, 400);
-        break;
-      case 'A'://Fast Left
-        motors.setSpeeds(-400, 400);
-        break;
-      case 'S'://Fast Back
-        motors.setSpeeds(-400, -400);
-        break;
-      case 'D'://Fast Right
-        motors.setSpeeds(400, -400);
-        break;
-      case '|'://Crash arduino
-        motors.setSpeeds(0, 0);
-        resetFunc();
-        break;
-      case 'e':
-      case 'E'://Stop motors
-        motors.setSpeeds(0, 0);
-        break;
-      case 'c'://Start Sensors Calibration
-        Serial1.println("Sensors: Start");
-        lineSensors.calibrate();
-        Serial1.println("Sensors: Calibrate");
-        calibrateSensors();
-        break;
-      case 'q'://Toggle Running Of Line Function
-        runLines = !runLines;
-        if (runLines) {
-          buzzer.play("g32");
-          Serial1.println("Start Line Tracking");
-        } else {
-          buzzer.play("e32");
-          Serial1.println("Stop Line Tracking");
-        }
-        break;
-      case 'l'://Toggle Running Of Distance Fuction
-        runDistance = !runDistance;
-        if (runDistance) {
-          buzzer.play("g32");
-          Serial1.println("Start Distance Tracking");
-        } else {
-          buzzer.play("e32");
-          Serial1.println("Stop Distance Tracking");
-        }
-        break;
-    }
+    //    switch (incomingChar) {
+    //      case 'w'://Forward
+    //        motors.setSpeeds(200, 200);
+    //        break;
+    //      case 'a'://Left
+    //        motors.setSpeeds(-200, 200);
+    //        break;
+    //      case 's'://Back
+    //        motors.setSpeeds(-200, -200);
+    //        break;
+    //      case 'd'://Right
+    //        motors.setSpeeds(200, -200);
+    //        break;
+    //      case 'W'://Fast Forward
+    //        motors.setSpeeds(400, 400);
+    //        break;
+    //      case 'A'://Fast Left
+    //        motors.setSpeeds(-400, 400);
+    //        break;
+    //      case 'S'://Fast Back
+    //        motors.setSpeeds(-400, -400);
+    //        break;
+    //      case 'D'://Fast Right
+    //        motors.setSpeeds(400, -400);
+    //        break;
+    //      case '|'://Crash arduino
+    //        motors.setSpeeds(0, 0);
+    //        resetFunc();
+    //        break;
+    //      case 'e':
+    //      case 'E'://Stop motors
+    //        motors.setSpeeds(0, 0);
+    //        break;
+    //      case 'c'://Start Sensors Calibration
+    //        Serial1.println("Sensors: Start");
+    //        lineSensors.calibrate();
+    //        Serial1.println("Sensors: Calibrate");
+    //        calibrateSensors();
+    //        break;
+    //      case 'q'://Toggle Running Of Line Function
+    //        runLines = !runLines;
+    //        if (runLines) {
+    //          buzzer.play("g32");
+    //          Serial1.println("Start Line Tracking");
+    //        } else {
+    //          buzzer.play("e32");
+    //          Serial1.println("Stop Line Tracking");
+    //        }
+    //        break;
+    //      case 'l'://Toggle Running Of Distance Fuction
+    //        runDistance = !runDistance;
+    //        if (runDistance) {
+    //          buzzer.play("g32");
+    //          Serial1.println("Start Distance Tracking");
+    //        } else {
+    //          buzzer.play("e32");
+    //          Serial1.println("Stop Distance Tracking");
+    //        }
+    //        break;
+    //    }
   }
   //END OF REMOTE CONTROL
 
