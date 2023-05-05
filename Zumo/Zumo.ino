@@ -15,6 +15,7 @@ Zumo32U4Buzzer buzzer;
 //Line Sensor Variables
 #define NUM_SENSORS 5
 unsigned int lineSensorValues[NUM_SENSORS];
+static uint16_t lastLineTime = 0;
 //End Of Line Sensor Variables
 
 //States
@@ -23,7 +24,7 @@ bool runDistance = false;
 //End Of States
 
 //Distance Sensor Variables
-static uint16_t lastSampleTime = 0;
+static uint16_t lastDistanceTime = 0;
 bool proxLeftActive;
 bool proxFrontActive;
 bool proxRightActive;
@@ -53,101 +54,95 @@ void calibrateSensors()
 }
 //End Of Calibrate Function
 
-//Debug function to write proximity data out to serial
-void printReadingsToSerial()
-{
-  Serial1.print("Afstand: ");
-  static char buffer[80];
-  sprintf(buffer, "%d %d %d %d %d %d \n",
-          proxSensors.countsLeftWithLeftLeds(),
-          proxSensors.countsLeftWithRightLeds(),
-          proxSensors.countsFrontWithLeftLeds(),
-          proxSensors.countsFrontWithRightLeds(),
-          proxSensors.countsRightWithLeftLeds(),
-          proxSensors.countsRightWithRightLeds()
-         );
-  Serial1.print(buffer);
 
-  if ((proxSensors.countsLeftWithLeftLeds() > 5) || (proxSensors.countsLeftWithRightLeds() > 5) || (proxSensors.countsRightWithLeftLeds() > 5) || (proxSensors.countsRightWithRightLeds() > 5) || (proxSensors.countsFrontWithLeftLeds() > 5) || (proxSensors.countsFrontWithRightLeds() > 5)) {
-    Serial1.println("COLLISION WARNING!!!");
-  }
-}
-//End Of Proximity Function
 
 //Function that crashes the arduino, used to hard reset the program in case of an unexpected state or error
 void(* resetFunc) (void) = 0;
 
 //Setup to init Serials and to initialize 5 line sensors
 void setup() {
-  Serial.begin(9600);
-  Serial1.begin(9600);
+  Serial.begin(115200);
+  Serial1.begin(115200);
   Serial1.println("BOOT");
   lineSensors.initFiveSensors();
+  proxSensors.initThreeSensors();
 }
 
 //START OF LINE FOLLOWING
 void LineTracking() {
   if (runLines) {
-    uint8_t left = lineSensorValues[0];
-    uint8_t mleft = lineSensorValues[1];
-    uint8_t middle = lineSensorValues[2];
-    uint8_t mright = lineSensorValues[3];
-    uint8_t right = lineSensorValues[4];
-    lineSensors.readCalibrated(lineSensorValues);
-    Serial1.print("Left: ");
-    Serial1.print(left);
-    Serial1.print("\n");
-    Serial1.print("mleft: ");
-    Serial1.print(mleft);
-    Serial1.print("\n");
-    Serial1.print("middle: ");
-    Serial1.print(middle);
-    Serial1.print("\n");
-    Serial1.print("mright: ");
-    Serial1.print(mright);
-    Serial1.print("\n");
-    Serial1.print("right: ");
-    Serial1.print(right);
-    Serial1.print("\n");
-    delay(200);
-    //    if (left > 800) {
-    //      motors.setSpeeds(0, 400);
-    //      //      delay(500);
-    //    }
-    //
-    //    if (right > 800) {
-    //      Serial1.println("MOVE RIGHT!");
-    //      motors.setSpeeds(400, 0);
-    //      //      delay(500);
-    //    }
-    //
-    //    if (middle > 800) {
-    //      Serial1.println("MOVE STRAIGHT!");
-    //      motors.setSpeeds(400, 400);
-    //      //      delay(500);
-    //    }
-    //    if (left < 400 && middle < 400 && right < 400) {
-    //      Serial1.println("MOVE quququ!");
-    //      motors.setSpeeds(400, -400);
-    //      //      delay(500);
-    //    }
+    if ((uint16_t)(millis() - lastLineTime) >= 200)//runt elke 200ms TODO: optimize??? 50ms mischien beter als we sneller gaan?
+    {
+      lastLineTime = millis();
+      uint8_t left = lineSensorValues[0];
+      uint8_t mleft = lineSensorValues[1];
+      uint8_t middle = lineSensorValues[2];
+      uint8_t mright = lineSensorValues[3];
+      uint8_t right = lineSensorValues[4];
+      lineSensors.readCalibrated(lineSensorValues);
+      Serial1.println("*LSL:" + (String)left + "*");
+      Serial1.println("*LSML:" + (String)mleft + "*");
+      Serial1.println("*LSM:" + (String)middle + "*");
+      Serial1.println("*LSMR:" + (String)mright + "*");
+      Serial1.println("*LSR:" + (String)right + "*");
+      //    if (left > 800) {
+      //      motors.setSpeeds(0, 400);
+      //      //      delay(500);
+      //    }
+      //
+      //    if (right > 800) {
+      //      Serial1.println("MOVE RIGHT!");
+      //      motors.setSpeeds(400, 0);
+      //      //      delay(500);
+      //    }
+      //
+      //    if (middle > 800) {
+      //      Serial1.println("MOVE STRAIGHT!");
+      //      motors.setSpeeds(400, 400);
+      //      //      delay(500);
+      //    }
+      //    if (left < 400 && middle < 400 && right < 400) {
+      //      Serial1.println("MOVE quququ!");
+      //      motors.setSpeeds(400, -400);
+      //      //      delay(500);
+      //    }
+    }
   }
 }
 //END OF LINE FOLLOWING
+
+
+
+//Function to write proximity data out to serial
+void printReadingsToSerial()
+{
+  Serial1.println("*PSL:" + (String)proxSensors.countsLeftWithLeftLeds() + "*");
+  Serial1.println("*PSMLL:" + (String)proxSensors.countsLeftWithRightLeds() + "*");
+  Serial1.println("*PSML:" + (String)proxSensors.countsFrontWithLeftLeds() + "*");
+  Serial1.println("*PSMR:" + (String)proxSensors.countsFrontWithRightLeds() + "*");
+  Serial1.println("*PSMRR:" + (String)proxSensors.countsRightWithLeftLeds() + "*");
+  Serial1.println("*PSR:" + (String)proxSensors.countsRightWithRightLeds() + "*");
+
+}
+//End Of Proximity Function
 
 
 //START OF DISTANCE SENSORS
 void DistanceTracking() {
   //(gestolen van martin)
   if (runDistance) {
-    if ((uint16_t)(millis() - lastSampleTime) >= 200)
+    if ((uint16_t)(millis() - lastDistanceTime) >= 300)//runt elke 300ms
     {
-      lastSampleTime = millis();
+      lastDistanceTime = millis();
       proxSensors.read();
       proxLeftActive = proxSensors.readBasicLeft();
       proxFrontActive = proxSensors.readBasicFront();
       proxRightActive = proxSensors.readBasicRight();
       printReadingsToSerial();
+
+      if ((proxSensors.countsLeftWithLeftLeds() > 5) || (proxSensors.countsLeftWithRightLeds() > 5) || (proxSensors.countsRightWithLeftLeds() > 5) || (proxSensors.countsRightWithRightLeds() > 5) || (proxSensors.countsFrontWithLeftLeds() > 5) || (proxSensors.countsFrontWithRightLeds() > 5)) {
+        Serial1.println("COLLISION WARNING!!!");
+      }
     }
   }
 }
@@ -201,7 +196,7 @@ void loop() {
         break;
       case 'q'://Toggle Running Of Line Function
         runLines = !runLines;
-        if (runDistance) {
+        if (runLines) {
           buzzer.play("g32");
           Serial1.println("Start Line Tracking");
         } else {
@@ -229,6 +224,11 @@ void loop() {
   }
   if (buttonC.getSingleDebouncedPress()) {
     motors.setSpeeds(0, 0);
+  }
+
+  if (buttonA.getSingleDebouncedPress()) {
+    Serial1.println("*testvar:testdata*");
+    Serial1.println("*testvar2:500*");
   }
   //END OF DEBUG BUTTONS
 
