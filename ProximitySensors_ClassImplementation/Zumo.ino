@@ -31,15 +31,15 @@ void printReadingsToSerial()
   );
   Serial.print(buffer);
   
-  if ((proxSensors.countsLeftWithLeftLeds() > 5) || (proxSensors.countsLeftWithRightLeds() > 5) || (proxSensors.countsRightWithLeftLeds() > 5) || (proxSensors.countsRightWithRightLeds() > 5) || (proxSensors.countsFrontWithLeftLeds() > 5) || (proxSensors.countsFrontWithRightLeds() > 5)) {
+  if ((proxSensors.countsLeftWithLeftLeds() > 4) || (proxSensors.countsLeftWithRightLeds() > 4) || (proxSensors.countsRightWithLeftLeds() > 4) || (proxSensors.countsRightWithRightLeds() > 4) || (proxSensors.countsFrontWithLeftLeds() > 4) || (proxSensors.countsFrontWithRightLeds() > 4)) {
     Serial.print("COLLISION WARNING!!!\n");
   }
 }
 
+static uint16_t lastSampleTime = 0;
+
 void loop()
 {
-  static uint16_t lastSampleTime = 0;
-
   if ((uint16_t)(millis() - lastSampleTime) >= 100)
   {
     lastSampleTime = millis();
@@ -53,7 +53,7 @@ void loop()
   if ((proxSensors.countsFrontWithLeftLeds() < 5) || (proxSensors.countsFrontWithRightLeds() < 5)) {
     motors.setSpeeds(200, 200);
   }
-  if ((proxSensors.countsFrontWithLeftLeds() > 4) || (proxSensors.countsFrontWithRightLeds() > 4)) {
+  else {
     motors.setSpeeds(0, 0);
   }
 }
