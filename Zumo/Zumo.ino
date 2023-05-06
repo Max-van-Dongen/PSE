@@ -11,11 +11,13 @@ Zumo32U4ProximitySensors proxSensors;
 Zumo32U4LineSensors lineSensors;
 Zumo32U4Motors motors;
 Zumo32U4Buzzer buzzer;
+Zumo32U4IMU sensor;
 
 
 //Line Sensor Variables
 #define NUM_SENSORS 5
 unsigned int lineSensorValues[NUM_SENSORS];
+unsigned int gyroValues[3];
 static uint16_t lastLineTime = 0;
 static uint16_t lastLinePrintTime = 0;
 //End Of Line Sensor Variables
@@ -71,20 +73,35 @@ void calibrateSensors()
 void(* resetFunc) (void) = 0;
 
 //Setup to init Serials and to initialize 5 line sensors
+float gyroOffsetY = 0;
 void setup() {
   Serial.begin(115200);
   Serial1.begin(115200);
   Serial1.println("*bt:0*");
+  Wire.begin();
+  //  Wire.start();
   lineSensors.initFiveSensors();
   proxSensors.initThreeSensors();
+  sensor.init();
+  sensor.enableDefault();
+  for (uint16_t i = 0; i < 1024; i++)
+  {
+    // Wait for new data to be available, then read it.
+    while (!sensor.gyroDataReady()) {}
+    sensor.readGyro();
+
+    // Add the Y axis reading to the total.
+    gyroOffsetY += sensor.g.y;
+  }
+  gyroOffsetY /= 1024;
 }
 
 //START OF LINE FOLLOWING
 
 void LineTracking() {
   if (runLines) {
-    
-    if ((uint16_t)(millis() - lastLinePrintTime) >= 500)//runt elke 500ms 
+
+    if ((uint16_t)(millis() - lastLinePrintTime) >= 500)//runt elke 500ms
     {
       lastLinePrintTime = millis();
       Serial1.println("*LSL:" + (String)lineSensorValues[0] + "*");
@@ -160,6 +177,29 @@ void DistanceTracking() {
   }
 }
 //END OF DISTANCE SENSORS
+float angle = 0;
+void updateAngleGyro()
+{
+  // Figure out how much time has passed since the last update.
+  static uint16_t lastUpdate = 0;
+  uint16_t m = micros();
+  uint16_t dt = m - lastUpdate;
+  lastUpdate = m;
+
+  sensor.readGyro();
+
+  // Calculate how much the angle has changed, in degrees, and
+  // add it to our estimation of the current angle.  The gyro's
+  // sensitivity is 0.07 dps per digit.
+  angle += ((float)sensor.g.y - gyroOffsetY) * 70 * dt / 1000000000;
+}
+
+void ReadGyro() {
+  updateAngleGyro();
+  Serial1.println("*GX:" + (String)angle + "*");
+  Serial1.println("*GY:" + (String)sensor.g.y + "*");
+  Serial1.println("*GZ:" + (String)sensor.g.z + "*");
+}
 
 
 //INCOMING MESSAGES
@@ -218,22 +258,21 @@ void InternalFunctions(String &var, String &arg) {
   if (var == "q") {
     runLines = !runLines;
     if (runLines) {
-      buzzer.play("g32");
       Serial1.println("Start Line Tracking");
     } else {
-      buzzer.play("e32");
       Serial1.println("Stop Line Tracking");
     }
   }
   if (var == "l") {
     runDistance = !runDistance;
     if (runDistance) {
-      buzzer.play("g32");
       Serial1.println("Start Distance Tracking");
     } else {
-      buzzer.play("e32");
       Serial1.println("Stop Distance Tracking");
     }
+  }
+  if (var == "h") {
+    buzzer.play("!T240 L8 a gafaeada c+adaeafa >aa>bac#ada c#adaeaf4");
   }
 
 }
@@ -278,67 +317,6 @@ void loop() {
   if (Serial1.available()) { // Check if there is any incoming data
     char incomingChar = Serial1.read(); // Read the incoming byte
     HandleSpecialMessages((String)incomingChar);
-    //    buzzer.play("g32");
-    //    switch (incomingChar) {
-    //      case 'w'://Forward
-    //        motors.setSpeeds(200, 200);
-    //        break;
-    //      case 'a'://Left
-    //        motors.setSpeeds(-200, 200);
-    //        break;
-    //      case 's'://Back
-    //        motors.setSpeeds(-200, -200);
-    //        break;
-    //      case 'd'://Right
-    //        motors.setSpeeds(200, -200);
-    //        break;
-    //      case 'W'://Fast Forward
-    //        motors.setSpeeds(400, 400);
-    //        break;
-    //      case 'A'://Fast Left
-    //        motors.setSpeeds(-400, 400);
-    //        break;
-    //      case 'S'://Fast Back
-    //        motors.setSpeeds(-400, -400);
-    //        break;
-    //      case 'D'://Fast Right
-    //        motors.setSpeeds(400, -400);
-    //        break;
-    //      case '|'://Crash arduino
-    //        motors.setSpeeds(0, 0);
-    //        resetFunc();
-    //        break;
-    //      case 'e':
-    //      case 'E'://Stop motors
-    //        motors.setSpeeds(0, 0);
-    //        break;
-    //      case 'c'://Start Sensors Calibration
-    //        Serial1.println("Sensors: Start");
-    //        lineSensors.calibrate();
-    //        Serial1.println("Sensors: Calibrate");
-    //        calibrateSensors();
-    //        break;
-    //      case 'q'://Toggle Running Of Line Function
-    //        runLines = !runLines;
-    //        if (runLines) {
-    //          buzzer.play("g32");
-    //          Serial1.println("Start Line Tracking");
-    //        } else {
-    //          buzzer.play("e32");
-    //          Serial1.println("Stop Line Tracking");
-    //        }
-    //        break;
-    //      case 'l'://Toggle Running Of Distance Fuction
-    //        runDistance = !runDistance;
-    //        if (runDistance) {
-    //          buzzer.play("g32");
-    //          Serial1.println("Start Distance Tracking");
-    //        } else {
-    //          buzzer.play("e32");
-    //          Serial1.println("Stop Distance Tracking");
-    //        }
-    //        break;
-    //    }
   }
   //END OF REMOTE CONTROL
 
@@ -348,8 +326,9 @@ void loop() {
   }
   if (buttonC.getSingleDebouncedPress()) {
     motors.setSpeeds(0, 0);
+    ReadGyro();
   }
-
+  updateAngleGyro();
   if (buttonA.getSingleDebouncedPress()) {
     Serial1.println("*testvar:testdata*");
     Serial1.println("*testvar2:500*");
