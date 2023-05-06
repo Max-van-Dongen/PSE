@@ -17,6 +17,7 @@ Zumo32U4Buzzer buzzer;
 #define NUM_SENSORS 5
 unsigned int lineSensorValues[NUM_SENSORS];
 static uint16_t lastLineTime = 0;
+static uint16_t lastLinePrintTime = 0;
 //End Of Line Sensor Variables
 
 //States
@@ -73,28 +74,29 @@ void(* resetFunc) (void) = 0;
 void setup() {
   Serial.begin(115200);
   Serial1.begin(115200);
-  Serial1.println("BOOT");
+  Serial1.println("*bt:0*");
   lineSensors.initFiveSensors();
   proxSensors.initThreeSensors();
 }
 
 //START OF LINE FOLLOWING
+
 void LineTracking() {
   if (runLines) {
+    
+    if ((uint16_t)(millis() - lastLinePrintTime) >= 500)//runt elke 500ms 
+    {
+      lastLinePrintTime = millis();
+      Serial1.println("*LSL:" + (String)lineSensorValues[0] + "*");
+      Serial1.println("*LSML:" + (String)lineSensorValues[1] + "*");
+      Serial1.println("*LSM:" + (String)lineSensorValues[2] + "*");
+      Serial1.println("*LSMR:" + (String)lineSensorValues[3] + "*");
+      Serial1.println("*LSR:" + (String)lineSensorValues[4] + "*");
+    }
     if ((uint16_t)(millis() - lastLineTime) >= 200)//runt elke 200ms TODO: optimize??? 50ms mischien beter als we sneller gaan?
     {
       lastLineTime = millis();
-      uint8_t left = lineSensorValues[0];
-      uint8_t mleft = lineSensorValues[1];
-      uint8_t middle = lineSensorValues[2];
-      uint8_t mright = lineSensorValues[3];
-      uint8_t right = lineSensorValues[4];
       lineSensors.readCalibrated(lineSensorValues);
-      Serial1.println("*LSL:" + (String)left + "*");
-      Serial1.println("*LSML:" + (String)mleft + "*");
-      Serial1.println("*LSM:" + (String)middle + "*");
-      Serial1.println("*LSMR:" + (String)mright + "*");
-      Serial1.println("*LSR:" + (String)right + "*");
       //    if (left > 800) {
       //      motors.setSpeeds(0, 400);
       //      //      delay(500);
@@ -141,7 +143,7 @@ void printReadingsToSerial()
 void DistanceTracking() {
   //(gestolen van martin)
   if (runDistance) {
-    if ((uint16_t)(millis() - lastDistanceTime) >= 300)//runt elke 300ms
+    if ((uint16_t)(millis() - lastDistanceTime) >= 500)//runt elke 500ms
     {
       lastDistanceTime = millis();
       proxSensors.read();
@@ -152,7 +154,7 @@ void DistanceTracking() {
 
       if ((proxSensors.countsLeftWithLeftLeds() > 5) || (proxSensors.countsLeftWithRightLeds() > 5) || (proxSensors.countsRightWithLeftLeds() > 5) ||
           (proxSensors.countsRightWithRightLeds() > 5) || (proxSensors.countsFrontWithLeftLeds() > 5) || (proxSensors.countsFrontWithRightLeds() > 5)) {
-        Serial1.println("COLLISION WARNING!!!");
+        //        Serial1.println("COLLISION WARNING!!!");
       }
     }
   }
@@ -161,6 +163,7 @@ void DistanceTracking() {
 
 
 //INCOMING MESSAGES
+int ctr = 0;
 void InternalFunctions(String &var, String &arg) {
   if (var == "AAA") {
     buzzer.play("g32");
@@ -188,6 +191,20 @@ void InternalFunctions(String &var, String &arg) {
   if (var == "e") {
     motors.setSpeeds(0, 0);
   }
+  if (var == "ls") {//LeftSpeed
+    motors.setLeftSpeed(arg.toInt());
+  }
+  if (var == "rs") {//RightSpeed
+    motors.setRightSpeed(arg.toInt());
+  }
+  if (var == "hb") {//HeartBeat
+    Serial1.println("*hb:" + ((String)ctr) + "*");
+    ctr++;
+  }
+  if (var == "init") {//Init Sensors
+    Serial1.println("*initls:" + ((String)runLines) + "*"); //Init Line Sensors
+    Serial1.println("*initps:" + ((String)runDistance) + "*"); //Init Prox Sensors
+  }
   if (var == "|") {
     motors.setSpeeds(0, 0);
     resetFunc();
@@ -209,6 +226,7 @@ void InternalFunctions(String &var, String &arg) {
     }
   }
   if (var == "l") {
+    runDistance = !runDistance;
     if (runDistance) {
       buzzer.play("g32");
       Serial1.println("Start Distance Tracking");
@@ -229,26 +247,26 @@ void HandleSpecialMessages(const String &msg) {
   if (msg.length() == 0) return;
   if (msg == "*") {
     receiving = !receiving;
-    Serial1.println("REC! " + (String)receiving);
+    //    Serial1.println("REC! " + (String)receiving);
     if (!beforesemicolon) {
       beforesemicolon = true;
       recievedArg = messagePart;
       messagePart = "";
-      Serial1.println(recievedVar);
-      Serial1.println(recievedArg);
+      //      Serial1.println(recievedVar);
+      //      Serial1.println(recievedArg);
       InternalFunctions(recievedVar, recievedArg);
     }
     return;
   }
   if (msg == ":") {
     beforesemicolon = !beforesemicolon;
-    Serial1.println("SEMI!" + (String)beforesemicolon);
+    //    Serial1.println("SEMI!" + (String)beforesemicolon);
     recievedVar = messagePart;
     messagePart = "";
     return;
   }
   if (receiving) {
-  messagePart += msg;
+    messagePart += msg;
   }
 
 }
@@ -260,7 +278,7 @@ void loop() {
   if (Serial1.available()) { // Check if there is any incoming data
     char incomingChar = Serial1.read(); // Read the incoming byte
     HandleSpecialMessages((String)incomingChar);
-    buzzer.play("g32");
+    //    buzzer.play("g32");
     //    switch (incomingChar) {
     //      case 'w'://Forward
     //        motors.setSpeeds(200, 200);
