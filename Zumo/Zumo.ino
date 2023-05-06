@@ -1,9 +1,6 @@
 #include <Wire.h>
 #include <Zumo32U4.h>
 
-
-
-
 Zumo32U4ButtonA buttonA;
 Zumo32U4ButtonB buttonB;
 Zumo32U4ButtonC buttonC;
@@ -77,14 +74,15 @@ void setup() {
   Serial1.println("*bt:0*");
   lineSensors.initFiveSensors();
   proxSensors.initThreeSensors();
+    uint16_t BLevels[] = {1, 2, 4, 9, 15, 23, 32, 42, 55, 70, 85, 100, 120, 135, 150, 170};   // default is { 4, 15, 32, 55, 85, 120 }
+  proxSensors.setBrightnessLevels(BLevels, 16);
 }
 
 //START OF LINE FOLLOWING
 
 void LineTracking() {
   if (runLines) {
-    
-    if ((uint16_t)(millis() - lastLinePrintTime) >= 500)//runt elke 500ms 
+    if ((uint16_t)(millis() - lastLinePrintTime) >= 500)//runt elke 500ms
     {
       lastLinePrintTime = millis();
       Serial1.println("*LSL:" + (String)lineSensorValues[0] + "*");
@@ -161,7 +159,6 @@ void DistanceTracking() {
 }
 //END OF DISTANCE SENSORS
 
-
 //INCOMING MESSAGES
 int ctr = 0;
 void InternalFunctions(String &var, String &arg) {
@@ -218,22 +215,21 @@ void InternalFunctions(String &var, String &arg) {
   if (var == "q") {
     runLines = !runLines;
     if (runLines) {
-      buzzer.play("g32");
       Serial1.println("Start Line Tracking");
     } else {
-      buzzer.play("e32");
       Serial1.println("Stop Line Tracking");
     }
   }
   if (var == "l") {
     runDistance = !runDistance;
     if (runDistance) {
-      buzzer.play("g32");
       Serial1.println("Start Distance Tracking");
     } else {
-      buzzer.play("e32");
       Serial1.println("Stop Distance Tracking");
     }
+  }
+  if (var == "h") {
+    buzzer.play("!T240 L8 a gafaeada c+adaeafa >aa>bac#ada c#adaeaf4");
   }
 
 }
@@ -278,67 +274,6 @@ void loop() {
   if (Serial1.available()) { // Check if there is any incoming data
     char incomingChar = Serial1.read(); // Read the incoming byte
     HandleSpecialMessages((String)incomingChar);
-    //    buzzer.play("g32");
-    //    switch (incomingChar) {
-    //      case 'w'://Forward
-    //        motors.setSpeeds(200, 200);
-    //        break;
-    //      case 'a'://Left
-    //        motors.setSpeeds(-200, 200);
-    //        break;
-    //      case 's'://Back
-    //        motors.setSpeeds(-200, -200);
-    //        break;
-    //      case 'd'://Right
-    //        motors.setSpeeds(200, -200);
-    //        break;
-    //      case 'W'://Fast Forward
-    //        motors.setSpeeds(400, 400);
-    //        break;
-    //      case 'A'://Fast Left
-    //        motors.setSpeeds(-400, 400);
-    //        break;
-    //      case 'S'://Fast Back
-    //        motors.setSpeeds(-400, -400);
-    //        break;
-    //      case 'D'://Fast Right
-    //        motors.setSpeeds(400, -400);
-    //        break;
-    //      case '|'://Crash arduino
-    //        motors.setSpeeds(0, 0);
-    //        resetFunc();
-    //        break;
-    //      case 'e':
-    //      case 'E'://Stop motors
-    //        motors.setSpeeds(0, 0);
-    //        break;
-    //      case 'c'://Start Sensors Calibration
-    //        Serial1.println("Sensors: Start");
-    //        lineSensors.calibrate();
-    //        Serial1.println("Sensors: Calibrate");
-    //        calibrateSensors();
-    //        break;
-    //      case 'q'://Toggle Running Of Line Function
-    //        runLines = !runLines;
-    //        if (runLines) {
-    //          buzzer.play("g32");
-    //          Serial1.println("Start Line Tracking");
-    //        } else {
-    //          buzzer.play("e32");
-    //          Serial1.println("Stop Line Tracking");
-    //        }
-    //        break;
-    //      case 'l'://Toggle Running Of Distance Fuction
-    //        runDistance = !runDistance;
-    //        if (runDistance) {
-    //          buzzer.play("g32");
-    //          Serial1.println("Start Distance Tracking");
-    //        } else {
-    //          buzzer.play("e32");
-    //          Serial1.println("Stop Distance Tracking");
-    //        }
-    //        break;
-    //    }
   }
   //END OF REMOTE CONTROL
 
@@ -349,7 +284,6 @@ void loop() {
   if (buttonC.getSingleDebouncedPress()) {
     motors.setSpeeds(0, 0);
   }
-
   if (buttonA.getSingleDebouncedPress()) {
     Serial1.println("*testvar:testdata*");
     Serial1.println("*testvar2:500*");
