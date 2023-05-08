@@ -1,4 +1,3 @@
-#include <Wire.h>
 #include <Zumo32U4.h>
 
 Zumo32U4ButtonA buttonA;
@@ -19,7 +18,9 @@ static uint16_t lastLinePrintTime = 0;
 
 //States
 bool runLines = false;
+bool FollowLine = false;
 bool runDistance = false;
+bool isCalibrated = false;
 //End Of States
 
 //Distance Sensor Variables
@@ -59,6 +60,7 @@ void calibrateSensors()
     lineSensors.calibrate();
   }
   motors.setSpeeds(0, 0);
+  isCalibrated = true;
 }
 //End Of Calibrate Function
 
@@ -74,48 +76,88 @@ void setup() {
   Serial1.println("*bt:0*");
   lineSensors.initFiveSensors();
   proxSensors.initThreeSensors();
-    uint16_t BLevels[] = {1, 2, 4, 9, 15, 23, 32, 42, 55, 70, 85, 100, 120, 135, 150, 170};   // default is { 4, 15, 32, 55, 85, 120 }
+  uint16_t BLevels[] = {1, 2, 4, 9, 15, 23, 32, 42, 55, 70, 85, 100, 120, 135, 150, 170};   // default is { 4, 15, 32, 55, 85, 120 }
   proxSensors.setBrightnessLevels(BLevels, 16);
 }
 
 //START OF LINE FOLLOWING
 
+String lastLinePosition = "";
+int LineSpeed = 200;
+int BlackValue = 800;
+
 void LineTracking() {
+  
+int CornerSpeed = LineSpeed*.7;
   if (runLines) {
     if ((uint16_t)(millis() - lastLinePrintTime) >= 500)//runt elke 500ms
     {
       lastLinePrintTime = millis();
       Serial1.println("*LSL:" + (String)lineSensorValues[0] + "*");
-      Serial1.println("*LSML:" + (String)lineSensorValues[1] + "*");
+      //      Serial1.println("*LSML:" + (String)lineSensorValues[1] + "*");
       Serial1.println("*LSM:" + (String)lineSensorValues[2] + "*");
-      Serial1.println("*LSMR:" + (String)lineSensorValues[3] + "*");
+      //      Serial1.println("*LSMR:" + (String)lineSensorValues[3] + "*");
       Serial1.println("*LSR:" + (String)lineSensorValues[4] + "*");
     }
-    if ((uint16_t)(millis() - lastLineTime) >= 200)//runt elke 200ms TODO: optimize??? 50ms mischien beter als we sneller gaan?
+    if ((uint16_t)(millis() - lastLineTime) >= 1)//runt elke 200ms TODO: optimize??? 50ms mischien beter als we sneller gaan?
     {
+      bool HasRan = false;
       lastLineTime = millis();
       lineSensors.readCalibrated(lineSensorValues);
-      //    if (left > 800) {
-      //      motors.setSpeeds(0, 400);
-      //      //      delay(500);
-      //    }
-      //
-      //    if (right > 800) {
-      //      Serial1.println("MOVE RIGHT!");
-      //      motors.setSpeeds(400, 0);
-      //      //      delay(500);
-      //    }
-      //
-      //    if (middle > 800) {
-      //      Serial1.println("MOVE STRAIGHT!");
-      //      motors.setSpeeds(400, 400);
-      //      //      delay(500);
-      //    }
-      //    if (left < 400 && middle < 400 && right < 400) {
-      //      Serial1.println("MOVE quququ!");
-      //      motors.setSpeeds(400, -400);
-      //      //      delay(500);
-      //    }
+      if (FollowLine) {
+        uint16_t left = lineSensorValues[0];
+        uint16_t middle = lineSensorValues[2];
+        uint16_t right = lineSensorValues[4];
+        
+        if (!HasRan && middle > BlackValue && right > BlackValue && left > BlackValue) {
+          motors.setSpeeds(CornerSpeed, 0);
+          lastLinePosition = "Right";
+          HasRan = true;
+        }
+        
+        if (!HasRan && middle > BlackValue && right > BlackValue) {
+          motors.setSpeeds(CornerSpeed, 0);
+          lastLinePosition = "Right";
+          HasRan = true;
+        }
+        
+        if (!HasRan && middle > BlackValue && left > BlackValue) {
+          motors.setSpeeds(0, CornerSpeed);
+          lastLinePosition = "Left";
+          HasRan = true;
+        }
+        if (!HasRan && left > BlackValue) {
+          motors.setSpeeds(0, CornerSpeed);
+          lastLinePosition = "Left";
+          HasRan = true;
+        }
+
+        if (!HasRan && right > BlackValue) {
+          motors.setSpeeds(CornerSpeed, 0);
+          lastLinePosition = "Right";
+          HasRan = true;
+        }
+
+        if (!HasRan && middle > BlackValue) {
+          motors.setSpeeds(LineSpeed, LineSpeed);
+          lastLinePosition = "Middle";
+          HasRan = true;
+        }
+        if (!HasRan && left < BlackValue && middle < BlackValue && right < BlackValue) {
+          HasRan = true;
+          if (lastLinePosition == "Left") {
+            motors.setSpeeds(0, CornerSpeed);
+          }
+          if (lastLinePosition == "Right") {
+            motors.setSpeeds(CornerSpeed, 0);
+          }
+
+          if (lastLinePosition == "Middle") {
+//            motors.setSpeeds(-200, -200);
+          }
+        }
+      }
+
     }
   }
 }
@@ -201,6 +243,8 @@ void InternalFunctions(String &var, String &arg) {
   if (var == "init") {//Init Sensors
     Serial1.println("*initls:" + ((String)runLines) + "*"); //Init Line Sensors
     Serial1.println("*initps:" + ((String)runDistance) + "*"); //Init Prox Sensors
+    Serial1.println("*initfls:" + ((String)FollowLine) + "*"); //Init Prox Sensors
+    Serial1.println("*initclb:" + ((String)isCalibrated) + "*"); //Init Prox Sensors
   }
   if (var == "|") {
     motors.setSpeeds(0, 0);
@@ -220,6 +264,18 @@ void InternalFunctions(String &var, String &arg) {
       Serial1.println("Stop Line Tracking");
     }
   }
+  if (var == "lspd") {
+    LineSpeed = arg.toInt();
+  }
+  if (var == "fl") {
+    FollowLine = !FollowLine;
+    if (FollowLine) {
+      Serial1.println("Start Line Following");
+    } else {
+      Serial1.println("Stop Line Following");
+      motors.setSpeeds(0,0);
+    }
+  }
   if (var == "l") {
     runDistance = !runDistance;
     if (runDistance) {
@@ -229,7 +285,7 @@ void InternalFunctions(String &var, String &arg) {
     }
   }
   if (var == "h") {
-    buzzer.play("!T240 L8 a gafaeada c+adaeafa >aa>bac#ada c#adaeaf4");
+    buzzer.play("!T240 V7 L8 a gafaeada c+adaeafa >aa>bac#ada c#adaeaf4");
   }
 
 }
@@ -295,7 +351,4 @@ void loop() {
   LineTracking();//No Delay
   DistanceTracking();//No Delay
   //End Of External Functions
-
-
-
 }
