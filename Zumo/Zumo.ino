@@ -1,5 +1,5 @@
 #include <Zumo32U4.h>
-
+#include "XbeeCommunication.h"
 Zumo32U4ButtonA buttonA;
 Zumo32U4ButtonB buttonB;
 Zumo32U4ButtonC buttonC;
@@ -7,6 +7,7 @@ Zumo32U4ProximitySensors proxSensors;
 Zumo32U4LineSensors lineSensors;
 Zumo32U4Motors motors;
 Zumo32U4Buzzer buzzer;
+XbeeCommunication xbee;
 
 
 //Line Sensor Variables
@@ -72,7 +73,7 @@ void(* resetFunc) (void) = 0;
 //Setup to init Serials and to initialize 5 line sensors
 void setup() {
   Serial.begin(115200);
-  Serial1.begin(115200);
+  xbee.setup();
   Serial1.println("*bt:0*");
   lineSensors.initFiveSensors();
   proxSensors.initThreeSensors();
@@ -87,8 +88,8 @@ int LineSpeed = 200;
 int BlackValue = 800;
 
 void LineTracking() {
-  
-int CornerSpeed = LineSpeed*.7;
+
+  int CornerSpeed = LineSpeed * .7;
   if (runLines) {
     if ((uint16_t)(millis() - lastLinePrintTime) >= 500)//runt elke 500ms
     {
@@ -108,19 +109,19 @@ int CornerSpeed = LineSpeed*.7;
         uint16_t left = lineSensorValues[0];
         uint16_t middle = lineSensorValues[2];
         uint16_t right = lineSensorValues[4];
-        
+
         if (!HasRan && middle > BlackValue && right > BlackValue && left > BlackValue) {
           motors.setSpeeds(CornerSpeed, 0);
           lastLinePosition = "Right";
           HasRan = true;
         }
-        
+
         if (!HasRan && middle > BlackValue && right > BlackValue) {
           motors.setSpeeds(CornerSpeed, 0);
           lastLinePosition = "Right";
           HasRan = true;
         }
-        
+
         if (!HasRan && middle > BlackValue && left > BlackValue) {
           motors.setSpeeds(0, CornerSpeed);
           lastLinePosition = "Left";
@@ -153,7 +154,7 @@ int CornerSpeed = LineSpeed*.7;
           }
 
           if (lastLinePosition == "Middle") {
-//            motors.setSpeeds(-200, -200);
+            //            motors.setSpeeds(-200, -200);
           }
         }
       }
@@ -273,7 +274,7 @@ void InternalFunctions(String &var, String &arg) {
       Serial1.println("Start Line Following");
     } else {
       Serial1.println("Stop Line Following");
-      motors.setSpeeds(0,0);
+      motors.setSpeeds(0, 0);
     }
   }
   if (var == "l") {
@@ -290,46 +291,15 @@ void InternalFunctions(String &var, String &arg) {
 
 }
 
-String messagePart = "";
-bool receiving = false;
-bool beforesemicolon = true;
-String recievedVar = "";
-String recievedArg = "";
-void HandleSpecialMessages(const String &msg) {
-  if (msg.length() == 0) return;
-  if (msg == "*") {
-    receiving = !receiving;
-    //    Serial1.println("REC! " + (String)receiving);
-    if (!beforesemicolon) {
-      beforesemicolon = true;
-      recievedArg = messagePart;
-      messagePart = "";
-      //      Serial1.println(recievedVar);
-      //      Serial1.println(recievedArg);
-      InternalFunctions(recievedVar, recievedArg);
-    }
-    return;
-  }
-  if (msg == ":") {
-    beforesemicolon = !beforesemicolon;
-    //    Serial1.println("SEMI!" + (String)beforesemicolon);
-    recievedVar = messagePart;
-    messagePart = "";
-    return;
-  }
-  if (receiving) {
-    messagePart += msg;
-  }
-
-}
 //END OF INCOMING MESSAGES
 
 void loop() {
 
   //START OF REMOTE CONTROL
-  if (Serial1.available()) { // Check if there is any incoming data
-    char incomingChar = Serial1.read(); // Read the incoming byte
-    HandleSpecialMessages((String)incomingChar);
+  xbee.loop();
+  if (xbee.gotMessage) {
+    xbee.gotMessage = false;
+    InternalFunctions(xbee.recievedVar, xbee.recievedArg);
   }
   //END OF REMOTE CONTROL
 
