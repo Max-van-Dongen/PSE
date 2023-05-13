@@ -1,6 +1,6 @@
 #include "XbeeCommunication.h"
 
-XbeeCommunication::XbeeCommunication() : messagePart(""), receiving(false), beforesemicolon(true), recievedVar(""), recievedArg("") {}
+XbeeCommunication::XbeeCommunication() : messagePart(""), receiving(false), beforesemicolon(true), recievedVar(""), recievedArg(""),gotMessage(false) {}
 
 void XbeeCommunication::setup() {
   Serial1.begin(115200); // Start Xbee serial
