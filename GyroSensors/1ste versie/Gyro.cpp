@@ -13,10 +13,9 @@ int Gyro::getLastError() {
 }
 
 bool Gyro::getStatus() {
-    bool check1 = sensor.accDataReady();
-    bool check2 = sensor.gyroDataReady();
-    bool check3 = sensor.magDataReady();
-    if (check1 && check2 && check3) {
+    if (sensor.accDataReady() && 
+        sensor.gyroDataReady() && 
+        sensor.magDataReady()) {
         return 1;
     } else {
         return 0;
