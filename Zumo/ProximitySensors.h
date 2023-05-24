@@ -1,7 +1,6 @@
 #ifndef PROXIMITY_SENSORS_H
 #define PROXIMITY_SENSORS_H
 
-#include <Wire.h>
 #include <Zumo32U4.h>
 
 class ProximitySensors
