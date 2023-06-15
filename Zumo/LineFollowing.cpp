@@ -26,9 +26,12 @@ void LineFollowing::calibratee() {
   calibrated = true;
 }
 
-
+int maxleft = 0;
+bool foundleft = false;
+int maxright = 0;
+bool foundright = false;
 void LineFollowing::loopLine() {
-  
+
   int CornerSpeed = LineSpeed * .7;
   if (runLines) {
     if ((uint16_t)(millis() - lastLinePrintTime) >= 500)//runt elke 500ms
@@ -46,16 +49,68 @@ void LineFollowing::loopLine() {
       lastLineTime = millis();
       lineSensors.readCalibrated(lineSensorValues);
       if (FollowLine) {
+        uint16_t farleft = lineSensorValues[0];
         uint16_t left = lineSensorValues[1];
         uint16_t middle = lineSensorValues[2];
         uint16_t right = lineSensorValues[3];
+        uint16_t farright = lineSensorValues[4];
+        if (farleft > 50) {
+          foundleft = true;
+          if (farleft > maxleft) {
+            maxleft = farleft;
+          }
+        }
+        
+        if (farright > 50) {
+          foundright = true;
+          if (farright > maxright) {
+            maxright = farright;
+          }
+        }
+        
+        if ((foundleft && farleft < 50) || (foundright && farright < 50)) {
+          if (foundleft && foundright) {
+            if (maxleft >= 250 && maxleft <= 285) {//grijs
+              Serial1.println("GRIJS");
+              Serial1.println("GRIJS");
+              Serial1.println("GRIJS");
+              motorss.setSpeeds(0, 0);
+              delay(2000);
+            }
+            maxleft = 0;
+            foundleft = false;
+            foundright = false;
+            maxright = 0;
 
+            
+          }
+          if (foundleft) {
+            Serial1.println("!!AA" + (String)maxleft + "");
+            if (maxleft >= 50 && maxleft <= 100) {//greer
+              Serial1.println("GROEEEEEEEEN");
+              Serial1.println("GROEEEEEEEEN");
+              Serial1.println("GROEEEEEEEEN");
+            }
+            maxleft = 0;
+            foundleft = false;
+          }
+          
+          if (foundright) {
+            Serial1.println("!!AA" + (String)maxright + "");
+            if (maxright >= 50 && maxright <= 100) {//greer
+              Serial1.println("GROEEEEEEEEN");
+              Serial1.println("GROEEEEEEEEN");
+              Serial1.println("GROEEEEEEEEN");
+            }
+            foundright = false;
+            maxright = 0;
+          }
+        }
         if (!HasRan && middle > BlackValue && right > BlackValue && left > BlackValue) {
           motorss.setSpeeds(CornerSpeed, 0);
           lastLinePosition = "Right";
           HasRan = true;
         }
-
         if (!HasRan && middle > BlackValue && right > BlackValue) {
           motorss.setSpeeds(CornerSpeed, 0);
           lastLinePosition = "Right";
@@ -72,13 +127,11 @@ void LineFollowing::loopLine() {
           lastLinePosition = "Left";
           HasRan = true;
         }
-
         if (!HasRan && right > BlackValue) {
           motorss.setSpeeds(CornerSpeed, 0);
           lastLinePosition = "Right";
           HasRan = true;
         }
-
         if (!HasRan && middle > BlackValue) {
           motorss.setSpeeds(LineSpeed, LineSpeed);
           lastLinePosition = "Middle";
@@ -92,14 +145,11 @@ void LineFollowing::loopLine() {
           if (lastLinePosition == "Right") {
             motorss.setSpeeds(CornerSpeed, 0);
           }
-
           if (lastLinePosition == "Middle") {
-            //            motorss.setSpeeds(-200, -200);
+            motorss.setSpeeds(200, 200);
           }
         }
       }
-
     }
   }
-
 }

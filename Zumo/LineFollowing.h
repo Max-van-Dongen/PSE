@@ -18,7 +18,7 @@ class LineFollowing
 
   private:
     String lastLinePosition = "Middle";
-    int BlackValue = 800;
+    int BlackValue = 700;
     unsigned int lineSensorValues[NUM_SENSORS];
     uint16_t lastLineTime = 0;
     uint16_t lastLinePrintTime = 0;
