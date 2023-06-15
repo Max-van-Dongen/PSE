@@ -1,0 +1,34 @@
+\doxysection{Proximity\+Sensors.\+h}
+\hypertarget{_proximity_sensors_8h_source}{}\label{_proximity_sensors_8h_source}\index{C:/Users/maxim/Downloads/PSE/Zumo/ProximitySensors.h@{C:/Users/maxim/Downloads/PSE/Zumo/ProximitySensors.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ PROXIMITY\_SENSORS\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ PROXIMITY\_SENSORS\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <Zumo32U4.h>}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_proximity_sensors}{ProximitySensors}}}
+\DoxyCodeLine{00007\ \{}
+\DoxyCodeLine{00008\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00009\ \ \ \ \ \mbox{\hyperlink{class_proximity_sensors}{ProximitySensors}}();}
+\DoxyCodeLine{00010\ \ \ \ \ \textcolor{keywordtype}{void}\ init();}
+\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keywordtype}{void}\ read();}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keywordtype}{bool}\ readBasicLeft();}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keywordtype}{bool}\ readBasicFront();}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keywordtype}{bool}\ readBasicRight();}
+\DoxyCodeLine{00015\ \ \ \ \ uint16\_t\ countsLeftWithLeftLeds();}
+\DoxyCodeLine{00016\ \ \ \ \ uint16\_t\ countsLeftWithRightLeds();}
+\DoxyCodeLine{00017\ \ \ \ \ uint16\_t\ countsFrontWithLeftLeds();}
+\DoxyCodeLine{00018\ \ \ \ \ uint16\_t\ countsFrontWithRightLeds();}
+\DoxyCodeLine{00019\ \ \ \ \ uint16\_t\ countsRightWithLeftLeds();}
+\DoxyCodeLine{00020\ \ \ \ \ uint16\_t\ countsRightWithRightLeds();}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00023\ \ \ \ \ Zumo32U4ProximitySensors\ proxSensors;}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{bool}\ proxLeftActive;}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{bool}\ proxFrontActive;}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{bool}\ proxRightActive;}
+\DoxyCodeLine{00027\ \};}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

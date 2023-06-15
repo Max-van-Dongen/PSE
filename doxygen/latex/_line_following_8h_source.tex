@@ -1,0 +1,32 @@
+\doxysection{Line\+Following.\+h}
+\hypertarget{_line_following_8h_source}{}\label{_line_following_8h_source}\index{C:/Users/maxim/Downloads/PSE/Zumo/LineFollowing.h@{C:/Users/maxim/Downloads/PSE/Zumo/LineFollowing.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ LINE\_FOLLOWING\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ LINE\_FOLLOWING\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#define\ NUM\_SENSORS\ 5}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <Zumo32U4.h>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_line_following}{LineFollowing}}}
+\DoxyCodeLine{00008\ \{}
+\DoxyCodeLine{00009\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00010\ \ \ \ \ \textcolor{keywordtype}{void}\ calibratee();}
+\DoxyCodeLine{00011\ \ \ \ \ \mbox{\hyperlink{class_line_following}{LineFollowing}}();}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keywordtype}{bool}\ FollowLine\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keywordtype}{bool}\ runLines\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keywordtype}{bool}\ calibrated\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keywordtype}{int}\ LineSpeed\ =\ 200;}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keywordtype}{void}\ loopLine();}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordtype}{void}\ setupLine();}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00020\ \ \ \ \ String\ lastLinePosition\ =\ \textcolor{stringliteral}{"{}Middle"{}};}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{int}\ BlackValue\ =\ 700;}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ lineSensorValues[NUM\_SENSORS];}
+\DoxyCodeLine{00023\ \ \ \ \ uint16\_t\ lastLineTime\ =\ 0;}
+\DoxyCodeLine{00024\ \ \ \ \ uint16\_t\ lastLinePrintTime\ =\ 0;}
+\DoxyCodeLine{00025\ \};}
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}
