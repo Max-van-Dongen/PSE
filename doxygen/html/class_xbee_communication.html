@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.7"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Zumo: XbeeCommunication Class Reference</title>
+<title>Zumo Project: XbeeCommunication Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,7 +21,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Zumo
+   <div id="projectname">Zumo Project
    </div>
   </td>
  </tr>
@@ -79,14 +79,20 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:af76d8aa8be3c8dc88841e49f027ae79c"><td class="memItemLeft" align="right" valign="top"><a id="af76d8aa8be3c8dc88841e49f027ae79c" name="af76d8aa8be3c8dc88841e49f027ae79c"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>XbeeCommunication</b> ()</td></tr>
+<tr class="memdesc:af76d8aa8be3c8dc88841e49f027ae79c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for the <a class="el" href="class_xbee_communication.html">XbeeCommunication</a> class. Initializes private member variables. <br /></td></tr>
+<tr class="separator:af76d8aa8be3c8dc88841e49f027ae79c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab0599663b8dfc4ca8b9ad5888929fbfb"><td class="memItemLeft" align="right" valign="top"><a id="ab0599663b8dfc4ca8b9ad5888929fbfb" name="ab0599663b8dfc4ca8b9ad5888929fbfb"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setup</b> ()</td></tr>
+<tr class="memdesc:ab0599663b8dfc4ca8b9ad5888929fbfb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set up the XBee communication. Initializes the serial communication for XBee at a baud rate of 115200. <br /></td></tr>
 <tr class="separator:ab0599663b8dfc4ca8b9ad5888929fbfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae103ef73f4fc1d3a2bd250a6cbdaf856"><td class="memItemLeft" align="right" valign="top"><a id="ae103ef73f4fc1d3a2bd250a6cbdaf856" name="ae103ef73f4fc1d3a2bd250a6cbdaf856"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>loop</b> ()</td></tr>
+<tr class="memdesc:ae103ef73f4fc1d3a2bd250a6cbdaf856"><td class="mdescLeft">&#160;</td><td class="mdescRight">Main loop for handling XBee communication. Checks if there are any incoming messages, reads the incoming byte, and handles the message. <br /></td></tr>
 <tr class="separator:ae103ef73f4fc1d3a2bd250a6cbdaf856"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2087a49d1d7c05dfa53bd82ba0d3bd87"><td class="memItemLeft" align="right" valign="top"><a id="a2087a49d1d7c05dfa53bd82ba0d3bd87" name="a2087a49d1d7c05dfa53bd82ba0d3bd87"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>HandleSpecialMessages</b> (const String &amp;msg)</td></tr>
+<tr class="memitem:a2087a49d1d7c05dfa53bd82ba0d3bd87"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_xbee_communication.html#a2087a49d1d7c05dfa53bd82ba0d3bd87">HandleSpecialMessages</a> (const String &amp;msg)</td></tr>
+<tr class="memdesc:a2087a49d1d7c05dfa53bd82ba0d3bd87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handles special messages from the XBee communication. It toggles receiving mode on and off, switches before and after semicolon, and constructs the message part.  <br /></td></tr>
 <tr class="separator:a2087a49d1d7c05dfa53bd82ba0d3bd87"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
@@ -101,9 +107,36 @@ String&#160;</td><td class="memItemRight" valign="bottom"><b>recievedVar</b></td
 String&#160;</td><td class="memItemRight" valign="bottom"><b>recievedArg</b></td></tr>
 <tr class="separator:a48cd46ee1cff703bdbdb5fd3ba43892e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a2087a49d1d7c05dfa53bd82ba0d3bd87" name="a2087a49d1d7c05dfa53bd82ba0d3bd87"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2087a49d1d7c05dfa53bd82ba0d3bd87">&#9670;&#160;</a></span>HandleSpecialMessages()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void XbeeCommunication::HandleSpecialMessages </td>
+          <td>(</td>
+          <td class="paramtype">const String &amp;&#160;</td>
+          <td class="paramname"><em>msg</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Handles special messages from the XBee communication. It toggles receiving mode on and off, switches before and after semicolon, and constructs the message part. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">msg</td><td>The incoming message string to handle. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>C:/Users/maxim/Downloads/PSE/Zumo/<a class="el" href="_xbee_communication_8h_source.html">XbeeCommunication.h</a></li>
-<li>C:/Users/maxim/Downloads/PSE/Zumo/XbeeCommunication.cpp</li>
+<li>Zumo/<a class="el" href="_xbee_communication_8h_source.html">XbeeCommunication.h</a></li>
+<li>Zumo/XbeeCommunication.cpp</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

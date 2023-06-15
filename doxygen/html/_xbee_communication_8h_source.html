@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.7"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Zumo: C:/Users/maxim/Downloads/PSE/Zumo/XbeeCommunication.h Source File</title>
+<title>Zumo Project: Zumo/XbeeCommunication.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,7 +21,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Zumo
+   <div id="projectname">Zumo Project
    </div>
   </td>
  </tr>
@@ -83,10 +83,10 @@ $(function() {
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno"><a class="line" href="class_xbee_communication.html">    6</a></span><span class="keyword">class </span><a class="code hl_class" href="class_xbee_communication.html">XbeeCommunication</a> {</div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>  <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>    <a class="code hl_class" href="class_xbee_communication.html">XbeeCommunication</a>();</div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>    <span class="keywordtype">void</span> setup();</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>    <span class="keywordtype">void</span> loop();</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    <span class="keywordtype">void</span> HandleSpecialMessages(<span class="keyword">const</span> String &amp;msg);</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>    <a class="code hl_function" href="class_xbee_communication.html#af76d8aa8be3c8dc88841e49f027ae79c">XbeeCommunication</a>();</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_xbee_communication.html#ab0599663b8dfc4ca8b9ad5888929fbfb">setup</a>();</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_xbee_communication.html#ae103ef73f4fc1d3a2bd250a6cbdaf856">loop</a>();</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_xbee_communication.html#a2087a49d1d7c05dfa53bd82ba0d3bd87">HandleSpecialMessages</a>(<span class="keyword">const</span> String &amp;msg);</div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    <span class="keywordtype">bool</span> gotMessage;</div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    String recievedVar;</div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    String recievedArg;</div>
@@ -98,6 +98,10 @@ $(function() {
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#endif</span></div>
 <div class="ttc" id="aclass_xbee_communication_html"><div class="ttname"><a href="class_xbee_communication.html">XbeeCommunication</a></div><div class="ttdef"><b>Definition</b> XbeeCommunication.h:6</div></div>
+<div class="ttc" id="aclass_xbee_communication_html_a2087a49d1d7c05dfa53bd82ba0d3bd87"><div class="ttname"><a href="class_xbee_communication.html#a2087a49d1d7c05dfa53bd82ba0d3bd87">XbeeCommunication::HandleSpecialMessages</a></div><div class="ttdeci">void HandleSpecialMessages(const String &amp;msg)</div><div class="ttdoc">Handles special messages from the XBee communication. It toggles receiving mode on and off,...</div><div class="ttdef"><b>Definition</b> XbeeCommunication.cpp:24</div></div>
+<div class="ttc" id="aclass_xbee_communication_html_ab0599663b8dfc4ca8b9ad5888929fbfb"><div class="ttname"><a href="class_xbee_communication.html#ab0599663b8dfc4ca8b9ad5888929fbfb">XbeeCommunication::setup</a></div><div class="ttdeci">void setup()</div><div class="ttdoc">Set up the XBee communication. Initializes the serial communication for XBee at a baud rate of 115200...</div><div class="ttdef"><b>Definition</b> XbeeCommunication.cpp:14</div></div>
+<div class="ttc" id="aclass_xbee_communication_html_ae103ef73f4fc1d3a2bd250a6cbdaf856"><div class="ttname"><a href="class_xbee_communication.html#ae103ef73f4fc1d3a2bd250a6cbdaf856">XbeeCommunication::loop</a></div><div class="ttdeci">void loop()</div><div class="ttdoc">Main loop for handling XBee communication. Checks if there are any incoming messages,...</div><div class="ttdef"><b>Definition</b> XbeeCommunication.cpp:52</div></div>
+<div class="ttc" id="aclass_xbee_communication_html_af76d8aa8be3c8dc88841e49f027ae79c"><div class="ttname"><a href="class_xbee_communication.html#af76d8aa8be3c8dc88841e49f027ae79c">XbeeCommunication::XbeeCommunication</a></div><div class="ttdeci">XbeeCommunication()</div><div class="ttdoc">Constructor for the XbeeCommunication class. Initializes private member variables.</div><div class="ttdef"><b>Definition</b> XbeeCommunication.cpp:7</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
