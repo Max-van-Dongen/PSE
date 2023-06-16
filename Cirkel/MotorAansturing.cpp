@@ -27,13 +27,23 @@ void MotorAansturing::begin(int l, int r) {
  Makes sure the motors have the same positive speed.
 */
 void MotorAansturing::vooruit() {
-  if ((snelheid_links == 0) || (snelheid_rechts == 0)) {
+  if ((snelheid_links == 0) || (snelheid_rechts == 0)) { 
     snelheid_links = 250;
     snelheid_rechts = 250;
     verander_snelheid(snelheid_links, snelheid_rechts);
-  } else if ((snelheid_links < 0) && (snelheid_rechts < 0)) {
-    verander_snelheid(-snelheid_links, -snelheid_rechts);
-  } else {
+  } 
+  else if ((snelheid_links < 0) || (snelheid_rechts < 0)) {
+    if ((snelheid_links < 0) && (snelheid_rechts < 0)) {
+      verander_snelheid(-snelheid_links, -snelheid_rechts);
+    } 
+    else if ((snelheid_links < 0) && (snelheid_rechts > 0)) {
+      verander_snelheid(-snelheid_links, snelheid_rechts);
+    }
+    else {
+      verander_snelheid(snelheid_links, -snelheid_rechts);
+    }
+  } 
+  else {
     verander_snelheid(snelheid_links, snelheid_rechts);
   }
 }
@@ -43,13 +53,23 @@ void MotorAansturing::vooruit() {
  Makes sure the motors have the same negative speed.
 */
 void MotorAansturing::achteruit() {
-  if ((snelheid_links == 0) || (snelheid_rechts == 0)) {
+  if ((snelheid_links == 0) || (snelheid_rechts == 0)) { 
     snelheid_links = 250;
     snelheid_rechts = 250;
     verander_snelheid(-snelheid_links, -snelheid_rechts);
-  } else if ((snelheid_links < 0) && (snelheid_rechts < 0)) {
-    verander_snelheid(snelheid_links, snelheid_rechts);
-  } else {
+  } 
+  else if ((snelheid_links < 0) || (snelheid_rechts < 0)) { 
+    if ((snelheid_links < 0) && (snelheid_rechts < 0)) {
+      verander_snelheid(snelheid_links, snelheid_rechts);
+    } 
+    else if ((snelheid_links < 0) && (snelheid_rechts > 0)) {
+      verander_snelheid(snelheid_links, -snelheid_rechts);
+    }
+    else {
+      verander_snelheid(-snelheid_links, snelheid_rechts);
+    }
+  } 
+  else {
     verander_snelheid(-snelheid_links, -snelheid_rechts);
   }
 }
@@ -59,17 +79,31 @@ void MotorAansturing::achteruit() {
  Makes the speed of the left motor negative and the speed of the right motor positive.
 */
 void MotorAansturing::links() {
-  if ((snelheid_links == 0) || (snelheid_rechts == 0)) {
+  if ((snelheid_links == 0) || (snelheid_rechts == 0)) { 
     snelheid_links = 250;
     snelheid_rechts = 250;
     int l = -snelheid_links / 2;
     int r = snelheid_rechts / 2;
     verander_snelheid(l, r);
-  } else if ((snelheid_links < 0) && (snelheid_rechts < 0)) {
-    int l = snelheid_links / 2;
-    int r = -snelheid_rechts / 2;
-    verander_snelheid(l, r);
-  } else {
+  } 
+  else if ((snelheid_links < 0) || (snelheid_rechts < 0)) {
+    if ((snelheid_links < 0) && (snelheid_rechts < 0)) {
+      int l = snelheid_links / 2;
+      int r = -snelheid_rechts / 2;
+      verander_snelheid(l, r);
+    } 
+    else if ((snelheid_links < 0) && (snelheid_rechts > 0)) {
+      int l = snelheid_links / 2;
+      int r = snelheid_rechts / 2;
+      verander_snelheid(l, r);
+    }
+    else {
+      int l = -snelheid_links / 2;
+      int r = -snelheid_rechts / 2;
+      verander_snelheid(l, r);
+    }
+  } 
+  else {
     int l = -snelheid_links / 2;
     int r = snelheid_rechts / 2;
     verander_snelheid(l, r);
@@ -81,17 +115,31 @@ void MotorAansturing::links() {
  Makes the speed of the right motor negative and the speed of the left motor positive.
 */
 void MotorAansturing::rechts() {
-  if ((snelheid_links == 0) || (snelheid_rechts == 0)) {
+  if ((snelheid_links == 0) || (snelheid_rechts == 0)) { 
     snelheid_links = 250;
     snelheid_rechts = 250;
     int l = snelheid_links / 2;
     int r = -snelheid_rechts / 2;
     verander_snelheid(l, r);
-  } else if ((snelheid_links < 0) && (snelheid_rechts < 0)) {
-    int l = -snelheid_links / 2;
-    int r = snelheid_rechts / 2;
-    verander_snelheid(l, r);
-  } else {
+  } 
+  else if ((snelheid_links < 0) || (snelheid_rechts < 0)) {
+    if ((snelheid_links < 0) && (snelheid_rechts < 0)) {
+      int l = -snelheid_links / 2;
+      int r = snelheid_rechts / 2;
+      verander_snelheid(l, r);
+    } 
+    else if ((snelheid_links < 0) && (snelheid_rechts > 0)) {
+      int l = -snelheid_links / 2;
+      int r = -snelheid_rechts / 2;
+      verander_snelheid(l, r);
+    }
+    else {
+      int l = snelheid_links / 2;
+      int r = snelheid_rechts / 2;
+      verander_snelheid(l, r);
+    }
+  } 
+  else {
     int l = snelheid_links / 2;
     int r = -snelheid_rechts / 2;
     verander_snelheid(l, r);
@@ -103,17 +151,31 @@ void MotorAansturing::rechts() {
  Makes the speed of the left motor 3/4 of the original speed. Speeds are positive.
 */
 void MotorAansturing::vooruit_links() {
-  if ((snelheid_links == 0) || (snelheid_rechts == 0)) {
+  if ((snelheid_links == 0) || (snelheid_rechts == 0)) { 
     snelheid_links = 250;
     snelheid_rechts = 250;
     int l = snelheid_links - (snelheid_links / 4);
     int r = snelheid_rechts;
     verander_snelheid(l, r);
-  } else if ((snelheid_links < 0) && (snelheid_rechts < 0)) {
-    int l = -(snelheid_links - (snelheid_links / 4));
-    int r = -snelheid_rechts;
-    verander_snelheid(l, r);
-  } else {
+  } 
+  else if ((snelheid_links < 0) || (snelheid_rechts < 0)) {
+    if ((snelheid_links < 0) && (snelheid_rechts < 0)) {
+      int l = -(snelheid_links - (snelheid_links / 4));
+      int r = -snelheid_rechts;
+      verander_snelheid(l, r);
+    } 
+    else if ((snelheid_links < 0) && (snelheid_rechts > 0)) {
+      int l = -(snelheid_links - (snelheid_links / 4));
+      int r = snelheid_rechts;
+      verander_snelheid(l, r);
+    }
+    else {
+      int l = (snelheid_links - (snelheid_links / 4));
+      int r = -snelheid_rechts;
+      verander_snelheid(l, r);
+    }
+  } 
+  else {
     int l = snelheid_links - (snelheid_links / 4);
     int r = snelheid_rechts;
     verander_snelheid(l, r);
@@ -125,17 +187,31 @@ void MotorAansturing::vooruit_links() {
  Makes the speed of the right motor 3/4 of the original speed. Speeds are positive.
 */
 void MotorAansturing::vooruit_rechts() {
-  if ((snelheid_links == 0) || (snelheid_rechts == 0)) {
+  if ((snelheid_links == 0) || (snelheid_rechts == 0)) { 
     snelheid_links = 250;
     snelheid_rechts = 250;
     int l = snelheid_links;
     int r = snelheid_rechts - (snelheid_rechts / 4);
     verander_snelheid(l, r);
-  } else if ((snelheid_links < 0) && (snelheid_rechts < 0)) {
-    int l = -snelheid_links;
-    int r = -(snelheid_rechts - (snelheid_rechts / 4));
-    verander_snelheid(l, r);
-  } else {
+  } 
+  else if ((snelheid_links < 0) || (snelheid_rechts < 0)) {
+    if ((snelheid_links < 0) && (snelheid_rechts < 0)) {
+      int l = -snelheid_links;
+      int r = -(snelheid_rechts - (snelheid_rechts / 4));
+      verander_snelheid(l, r);
+    } 
+    else if ((snelheid_links < 0) && (snelheid_rechts > 0)) {
+      int l = -snelheid_links;
+      int r = (snelheid_rechts - (snelheid_rechts / 4));
+      verander_snelheid(l, r);
+    }
+    else {
+      int l = snelheid_links;
+      int r = -(snelheid_rechts - (snelheid_rechts / 4));
+      verander_snelheid(l, r);
+    }
+  } 
+  else {
     int l = snelheid_links;
     int r = snelheid_rechts - (snelheid_rechts / 4);
     verander_snelheid(l, r);
@@ -148,17 +224,31 @@ void MotorAansturing::vooruit_rechts() {
  Makes the speed of the left motor 3/4 of the original speed. Speeds are negative.
 */
 void MotorAansturing::achteruit_links() {
-  if ((snelheid_links == 0) || (snelheid_rechts == 0)) {
+  if ((snelheid_links == 0) || (snelheid_rechts == 0)) { 
     snelheid_links = 250;
     snelheid_rechts = 250;
     int l = -snelheid_links + (snelheid_links / 4);
     int r = -snelheid_rechts;
     verander_snelheid(l, r);
-  } else if ((snelheid_links < 0) && (snelheid_rechts < 0)) {
-    int l = snelheid_links - (snelheid_links / 4);
-    int r = snelheid_rechts;
-    verander_snelheid(l, r);
-  } else {
+  } 
+  else if ((snelheid_links < 0) || (snelheid_rechts < 0)) {
+    if ((snelheid_links < 0) && (snelheid_rechts < 0)) {
+      int l = snelheid_links - (snelheid_links / 4);
+      int r = snelheid_rechts;
+      verander_snelheid(l, r);
+    } 
+    else if ((snelheid_links < 0) && (snelheid_rechts > 0)) {
+      int l = snelheid_links - (snelheid_links / 4);
+      int r = -snelheid_rechts;
+      verander_snelheid(l, r);
+    }
+    else {
+      int l = -snelheid_links - (snelheid_links / 4);
+      int r = snelheid_rechts;
+      verander_snelheid(l, r);
+    }
+  } 
+  else {
     int l = -snelheid_links + (snelheid_links / 4);
     int r = -snelheid_rechts;
     verander_snelheid(l, r);
@@ -170,17 +260,31 @@ void MotorAansturing::achteruit_links() {
  Makes the speed of the right motor 3/4 of the original speed. Speeds are negative.
 */
 void MotorAansturing::achteruit_rechts() {
-  if ((snelheid_links == 0) || (snelheid_rechts == 0)) {
+  if ((snelheid_links == 0) || (snelheid_rechts == 0)) { 
     snelheid_links = 250;
     snelheid_rechts = 250;
     int l = -snelheid_links;
     int r = -snelheid_rechts + (snelheid_rechts / 4);
     verander_snelheid(l, r);
-  } else if ((snelheid_links < 0) && (snelheid_rechts < 0)) {
-    int l = snelheid_links;
-    int r = snelheid_rechts - (snelheid_rechts / 4);
-    verander_snelheid(l, r);
-  } else {
+  } 
+  else if ((snelheid_links < 0) || (snelheid_rechts < 0)) {
+    if ((snelheid_links < 0) && (snelheid_rechts < 0)) {
+      int l = snelheid_links;
+      int r = snelheid_rechts - (snelheid_rechts / 4);
+      verander_snelheid(l, r);
+    } 
+    else if ((snelheid_links < 0) && (snelheid_rechts > 0)) {
+      int l = snelheid_links;
+      int r = -snelheid_rechts - (snelheid_rechts / 4);
+      verander_snelheid(l, r);
+    }
+    else {
+      int l = -snelheid_links;
+      int r = snelheid_rechts - (snelheid_rechts / 4);
+      verander_snelheid(l, r);
+    }
+  } 
+  else {
     int l = -snelheid_links;
     int r = -snelheid_rechts + (snelheid_rechts / 4);
     verander_snelheid(l, r);
@@ -192,11 +296,10 @@ void MotorAansturing::achteruit_rechts() {
  slowly reduce the speeds of the motors until it reaches 0.
 */
 void MotorAansturing::langzaam_stop() {
-  int s = 0;
-  if ((snelheid_links >= s) && (snelheid_rechts >= s)) {
-    vertragen_tot(s);
+  if ((snelheid_links >= 0) && (snelheid_rechts >= 0)) {
+    vertragen_tot(0);
   } else {
-    versnellen_tot(s);
+    versnellen_tot(0);
   }
 }
 
