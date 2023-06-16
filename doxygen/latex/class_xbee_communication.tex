@@ -1,0 +1,52 @@
+\doxysection{Xbee\+Communication Class Reference}
+\hypertarget{class_xbee_communication}{}\label{class_xbee_communication}\index{XbeeCommunication@{XbeeCommunication}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_xbee_communication_af76d8aa8be3c8dc88841e49f027ae79c}\label{class_xbee_communication_af76d8aa8be3c8dc88841e49f027ae79c} 
+{\bfseries Xbee\+Communication} ()
+\begin{DoxyCompactList}\small\item\em Constructor for the \doxylink{class_xbee_communication}{Xbee\+Communication} class. Initializes private member variables. \end{DoxyCompactList}\item 
+\Hypertarget{class_xbee_communication_ab0599663b8dfc4ca8b9ad5888929fbfb}\label{class_xbee_communication_ab0599663b8dfc4ca8b9ad5888929fbfb} 
+void {\bfseries setup} ()
+\begin{DoxyCompactList}\small\item\em Set up the XBee communication. Initializes the serial communication for XBee at a baud rate of 115200. \end{DoxyCompactList}\item 
+\Hypertarget{class_xbee_communication_ae103ef73f4fc1d3a2bd250a6cbdaf856}\label{class_xbee_communication_ae103ef73f4fc1d3a2bd250a6cbdaf856} 
+void {\bfseries loop} ()
+\begin{DoxyCompactList}\small\item\em Main loop for handling XBee communication. Checks if there are any incoming messages, reads the incoming byte, and handles the message. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_xbee_communication_a2087a49d1d7c05dfa53bd82ba0d3bd87}{Handle\+Special\+Messages}} (const String \&msg)
+\begin{DoxyCompactList}\small\item\em Handles special messages from the XBee communication. It toggles receiving mode on and off, switches before and after semicolon, and constructs the message part. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_xbee_communication_a6bd3fec9be55a839fb5b5053cc5733f8}\label{class_xbee_communication_a6bd3fec9be55a839fb5b5053cc5733f8} 
+bool {\bfseries got\+Message}
+\item 
+\Hypertarget{class_xbee_communication_ac4f6f89bf616be66f4280e545c18eef2}\label{class_xbee_communication_ac4f6f89bf616be66f4280e545c18eef2} 
+String {\bfseries recieved\+Var}
+\item 
+\Hypertarget{class_xbee_communication_a48cd46ee1cff703bdbdb5fd3ba43892e}\label{class_xbee_communication_a48cd46ee1cff703bdbdb5fd3ba43892e} 
+String {\bfseries recieved\+Arg}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_xbee_communication_a2087a49d1d7c05dfa53bd82ba0d3bd87}\label{class_xbee_communication_a2087a49d1d7c05dfa53bd82ba0d3bd87} 
+\index{XbeeCommunication@{XbeeCommunication}!HandleSpecialMessages@{HandleSpecialMessages}}
+\index{HandleSpecialMessages@{HandleSpecialMessages}!XbeeCommunication@{XbeeCommunication}}
+\doxysubsubsection{\texorpdfstring{HandleSpecialMessages()}{HandleSpecialMessages()}}
+{\footnotesize\ttfamily void Xbee\+Communication\+::\+Handle\+Special\+Messages (\begin{DoxyParamCaption}\item[{const String \&}]{msg }\end{DoxyParamCaption})}
+
+
+
+Handles special messages from the XBee communication. It toggles receiving mode on and off, switches before and after semicolon, and constructs the message part. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em msg} & The incoming message string to handle. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Zumo/Xbee\+Communication.\+h\item 
+Zumo/Xbee\+Communication.\+cpp\end{DoxyCompactItemize}

@@ -161,7 +161,7 @@ void InternalFunctions(String &var, String &arg) {
     }
   }
   if (var == "h") {
-    buzzer.play("!T240 V7 L8 a gafaeada c+adaeafa >aa>bac#ada c#adaeaf4");
+    buzzer.play("!T240 V10 L8 a gafaeada c+adaeafa >aa>bac#ada c#adaeaf4");
   }
 
 }
