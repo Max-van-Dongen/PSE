@@ -44,13 +44,12 @@ void InCirkel() {
   Serial.println(left);
   right += encoders.getCountsAndResetRight();
   Serial.println(right);     
-  while (left < 2092) {//20cm: 2092
-    motor.begin(160, 160); //(160, 173)
-
-    MotorCalibratie();
+  while (left < 2092) {// 2092 = 20cm, de Zumo rijdt vooruit totdat er 2092 counts is geteld, dan is de afgelelgde afstand 20cm
+    motor.begin(160, 160); 
+    MotorCalibratie(); //roept MotorCalibratie om te zorgen dat beide motors echt met dezelfde snelheid draaien 
   }
-  motor.noodstop();
-  zoekEindblok();
+  motor.noodstop(); // motor stopt onmiddellijk
+  zoekEindblok(); //roept zoekEindblok om de bolk te vinden
 
 }
 
@@ -60,7 +59,7 @@ void MotorCalibratie(){
   Serial.println(left);
   right += encoders.getCountsAndResetRight();
   Serial.println(right);     
-  while (left != right){
+  while (left != right){ // blijft snelheden van de motors aanpassen totdat beide motors dezelfde counts geven
     if(left < right) {
       Serial.println("left < right"); 
       left += encoders.getCountsAndResetLeft();
@@ -110,17 +109,17 @@ void printReadingsToSerial()
 //dan rijdt de Zumo vooruit om het blokje uit de cirkel te duwen totdat hij de lijn van de cirkel ziet
 void zoekEindblok() {
   Serial.println("zoeken");
-  motor.verander_snelheid(200, 200);
-  motor.links();
+  motor.verander_snelheid(200, 200); // stel de snelheid van de motoren in op 200
+  motor.links(); // laat de Zumo om zichzelf draaien naar links
   static uint16_t lastSampleTime = 0;
   vooraan_links = -1;
   vooraan_rechts = -2;
-  while (!((vooraan_links == vooraan_rechts) && ((vooraan_links > 0) && (vooraan_rechts > 0)))) 
+  while (!((vooraan_links == vooraan_rechts) && ((vooraan_links > 0) && (vooraan_rechts > 0)))) // blijft zoeken voor de bolk totdat hij het vindt
   {
     vooraan_links = proxSensors.countsFrontWithLeftLeds();
     vooraan_rechts = proxSensors.countsFrontWithRightLeds();
     printReadingsToSerial();
-    if ((uint16_t)(millis() - lastSampleTime) >= 100)
+    if ((uint16_t)(millis() - lastSampleTime) >= 100) //runt elke 100ms, leest de waarde van de proximity sensors
     {
       lastSampleTime = millis();
       proxSensors.read();
@@ -132,16 +131,16 @@ void zoekEindblok() {
   }
   vooraan_links = -1;
   vooraan_rechts = -2;
-  motor.noodstop();
+  motor.noodstop(); //als de Zumo de blok vindt, stopt hij met draaien zodat de blok direct voor hem staat
 
-  lineSensor.read(lineSensorValues);
+  lineSensor.read(lineSensorValues); //leest waarde van de linesensor
   uint16_t middle = lineSensorValues[2];
   
-  while (middle < 690){
+  while (middle < 690){ //Zumo rijdt vooruit (richting de blok) totdat hij de lijn van de cirkel ziet
     motor.vooruit();
     lineSensor.read(lineSensorValues);
     middle = lineSensorValues[2];
   }
   
-  motor.noodstop();
+  motor.noodstop();//de zumo stopt
 }
