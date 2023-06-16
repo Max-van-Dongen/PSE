@@ -6,26 +6,26 @@
 
 Zumo32U4Motors motors;
 
-/**
- * @brief Constructor for the MotorAansturing class.
- * Initializes private member variables.
- */
+/*
+ Constructor for the MotorAansturing class.
+ Initializes private member variables.
+*/
 MotorAansturing::MotorAansturing(): snelheid_links(0), snelheid_rechts(0) {}
 
-/**
- * @brief Method to start the motors.
- * Initializes the speeds of both motors.
- */
+/*
+ Method to start the motors.
+ Initializes the speeds of both motors.
+*/
 void MotorAansturing::begin(int l, int r) {
   snelheid_links = l;
   snelheid_rechts = r;
   verander_snelheid(snelheid_links, snelheid_rechts);
 }
 
-/**
- * @brief Method to ride forwards.
- * Makes sure the motors have the same positive speed.
- */
+/*
+ Method to ride forwards.
+ Makes sure the motors have the same positive speed.
+*/
 void MotorAansturing::vooruit() {
   if ((snelheid_links == 0) || (snelheid_rechts == 0)) {
     snelheid_links = 250;
@@ -38,10 +38,10 @@ void MotorAansturing::vooruit() {
   }
 }
 
-/**
- * @brief Method to ride backwards.
- * Makes sure the motors have the same negative speed.
- */
+/*
+ Method to ride backwards.
+ Makes sure the motors have the same negative speed.
+*/
 void MotorAansturing::achteruit() {
   if ((snelheid_links == 0) || (snelheid_rechts == 0)) {
     snelheid_links = 250;
@@ -54,10 +54,10 @@ void MotorAansturing::achteruit() {
   }
 }
 
-/**
- * @brief Method to turn the Zumo around itself to the left.
- * Makes the speed of the left motor negative and the speed of the right motor positive.
- */
+/*
+ Method to turn the Zumo around itself to the left.
+ Makes the speed of the left motor negative and the speed of the right motor positive.
+*/
 void MotorAansturing::links() {
   if ((snelheid_links == 0) || (snelheid_rechts == 0)) {
     snelheid_links = 250;
@@ -76,10 +76,10 @@ void MotorAansturing::links() {
   }
 }
 
-/**
- * @brief Method to turn the Zumo around itself to the right.
- * Makes the speed of the right motor negative and the speed of the left motor positive.
- */
+/*
+ Method to turn the Zumo around itself to the right.
+ Makes the speed of the right motor negative and the speed of the left motor positive.
+*/
 void MotorAansturing::rechts() {
   if ((snelheid_links == 0) || (snelheid_rechts == 0)) {
     snelheid_links = 250;
@@ -98,10 +98,10 @@ void MotorAansturing::rechts() {
   }
 }
 
-/**
- * @brief Method to turn the Zumo a little to the left while still moving forwards.
- * Makes the speed of the left motor 3/4 of the original speed. Speeds are positive.
- */
+/*
+ Method to turn the Zumo a little to the left while still moving forwards.
+ Makes the speed of the left motor 3/4 of the original speed. Speeds are positive.
+*/
 void MotorAansturing::vooruit_links() {
   if ((snelheid_links == 0) || (snelheid_rechts == 0)) {
     snelheid_links = 250;
@@ -120,10 +120,10 @@ void MotorAansturing::vooruit_links() {
   }
 }
 
-/**
- * @brief Method to turn the Zumo a little to the right while still moving forwards.
- * Makes the speed of the right motor 3/4 of the original speed. Speeds are positive.
- */
+/*
+ Method to turn the Zumo a little to the right while still moving forwards.
+ Makes the speed of the right motor 3/4 of the original speed. Speeds are positive.
+*/
 void MotorAansturing::vooruit_rechts() {
   if ((snelheid_links == 0) || (snelheid_rechts == 0)) {
     snelheid_links = 250;
@@ -143,10 +143,10 @@ void MotorAansturing::vooruit_rechts() {
 }
 
 
-/**
- * @brief Method to turn the Zumo a little to the left while still moving backwards.
- * Makes the speed of the left motor 3/4 of the original speed. Speeds are negative.
- */
+/*
+ Method to turn the Zumo a little to the left while still moving backwards.
+ Makes the speed of the left motor 3/4 of the original speed. Speeds are negative.
+*/
 void MotorAansturing::achteruit_links() {
   if ((snelheid_links == 0) || (snelheid_rechts == 0)) {
     snelheid_links = 250;
@@ -165,10 +165,10 @@ void MotorAansturing::achteruit_links() {
   }
 }
 
-/**
- * @brief Method to turn the Zumo a little to the left while still moving backwards.
- * Makes the speed of the right motor 3/4 of the original speed. Speeds are negative.
- */
+/*
+ Method to turn the Zumo a little to the left while still moving backwards.
+ Makes the speed of the right motor 3/4 of the original speed. Speeds are negative.
+*/
 void MotorAansturing::achteruit_rechts() {
   if ((snelheid_links == 0) || (snelheid_rechts == 0)) {
     snelheid_links = 250;
@@ -187,10 +187,10 @@ void MotorAansturing::achteruit_rechts() {
   }
 }
 
-/**
- * @brief Method to slowly stop the Zumo.
- * slowly reduce the speeds of the motors until it reaches 0.
- */
+/*
+ Method to slowly stop the Zumo.
+ slowly reduce the speeds of the motors until it reaches 0.
+*/
 void MotorAansturing::langzaam_stop() {
   int s = 0;
   if ((snelheid_links >= s) && (snelheid_rechts >= s)) {
@@ -200,30 +200,30 @@ void MotorAansturing::langzaam_stop() {
   }
 }
 
-/**
- * @brief Method to immediately stop the Zumo.
- * Set the speeds of the motors to 0.
- */
+/*
+ Method to immediately stop the Zumo.
+ Set the speeds of the motors to 0.
+*/
 void MotorAansturing::noodstop() {
   snelheid_links = 0;
   snelheid_rechts = 0;
   verander_snelheid(snelheid_links, snelheid_rechts);
 }
 
-/**
- * @brief Method to change the speeds of the motors.
- * Set the speeds of the motors to the speeds given in the parameters.
- */
+/*
+ Method to change the speeds of the motors.
+ Set the speeds of the motors to the speeds given in the parameters.
+*/
 void MotorAansturing::verander_snelheid(int l, int r) {
   snelheid_links = l;
   snelheid_rechts = r;
   motors.setSpeeds(snelheid_links, snelheid_rechts);
 }
 
-/**
- * @brief Method to increase the speeds of the motors.
- * slowly increase the speeds of the motors until it reaches the speed given in the parameter.
- */
+/*
+ Method to increase the speeds of the motors.
+ slowly increase the speeds of the motors until it reaches the speed given in the parameter.
+*/
 void MotorAansturing::versnellen_tot(int s) {
   if ((snelheid_links >= s) && (snelheid_rechts >= s)) {
     Serial.begin(9600);
@@ -237,10 +237,10 @@ void MotorAansturing::versnellen_tot(int s) {
   }
 }
 
-/**
- * @brief Method to reduce the speeds of the motors.
- * slowly reduce the speeds of the motors until it reaches the speed given in the parameter.
- */
+/*
+ Method to reduce the speeds of the motors.
+ slowly reduce the speeds of the motors until it reaches the speed given in the parameter.
+*/
 void MotorAansturing::vertragen_tot(int s) {
   if ((snelheid_links <= s) && (snelheid_rechts <= s)) {
     Serial.begin(9600);
@@ -254,18 +254,18 @@ void MotorAansturing::vertragen_tot(int s) {
   }
 }
 
-/**
- * @brief Method to ask for the speed of the left motor.
- * Returns the current speed of the left motor.
- */
+/*
+ Method to ask for the speed of the left motor.
+ Returns the current speed of the left motor.
+*/
 int MotorAansturing::geef_snelheid_links() const {
   return snelheid_links;
 }
 
-/**
- * @brief Method to ask for the speed of the right motor.
- * Returns the current speed of the right motor.
- */
+/*
+ Method to ask for the speed of the right motor.
+ Returns the current speed of the right motor.
+*/
 int MotorAansturing::geef_snelheid_rechts() const {
   return snelheid_rechts;
 }
