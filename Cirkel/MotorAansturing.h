@@ -22,5 +22,4 @@ public:
 private:
   int snelheid_links;
   int snelheid_rechts;
-  void verander_richting(int l, int r);
 };

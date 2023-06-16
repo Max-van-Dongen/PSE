@@ -22,8 +22,8 @@ int right = 0;
 void setup() {
   Serial.begin(9600);
   proxSensors.initFrontSensor();
- uint16_t brightnesslevelsprox[] = {384,386,388,390,392,394,396,398,400,402,404,406,408,410,412,414,416,418,420, 422,424,426};
- //395,400,405,410,415,420,425,430,435,440,445,450,455,460,465,470,475,480,485,490,495,500,505,510,515,520,525,530,535,540,545,550,555,560,565,570,575,580,585,590,595,600,605,610,615,620,625,630,635,640,645,650,655,660,665,670,675,680,685,690,695
+  // Aanpassen van de brightness levels van de proximity sensors voor een nauwkeuriger meting
+  uint16_t brightnesslevelsprox[] = {384,386,388,390,392,394,396,398,400,402,404,406,408,410,412,414,416,418,420, 422,424,426};
   proxSensors.setBrightnessLevels(brightnesslevelsprox, sizeof(brightnesslevelsprox)/2);
   lineSensor.initFiveSensors();
   lineSensor.calibrate();
@@ -31,25 +31,15 @@ void setup() {
 }
 
 void loop() {
+  //roep de methode InCirkel. 
+  //Na koppeling met de andere codes moet hier een conditie komen, InCirkel wordt geroepen als de Zumo bruine lijn ziet
   InCirkel();
- /* lineSensor.read(lineSensorValues);
-  uint16_t middle = lineSensorValues[2];
-  
-  while (middle < 690){
-    Serial.println(middle);
-    motor.begin(50,50);
-    lineSensor.read(lineSensorValues);
-    middle = lineSensorValues[2];
-  }
-  motor.noodstop();*/
+ // delay wordt alleen gebruikt omdat de code nog alleen staat zonder koppeling met de rest
   delay(10000);
 }
 
+//InCirkel laat de zumo precies 20 cm rijden met behulp van de encoder, dan roept de methode zoekEindBlok
 void InCirkel() {
-  Serial.print("links: ");
-  Serial.println(motor.geef_snelheid_links());
-  Serial.print("rechts: ");
-  Serial.println(motor.geef_snelheid_rechts());
   left += encoders.getCountsAndResetLeft();
   Serial.println(left);
   right += encoders.getCountsAndResetRight();
@@ -64,8 +54,8 @@ void InCirkel() {
 
 }
 
+//methode MotorCalibratie zorgt ervoor dat de Zumo een rechte lijn rijdt, omdat de motoren niet even sterk zijn
 void MotorCalibratie(){  
- // int snleheid = motor.geef_snelheid_links();
   left += encoders.getCountsAndResetLeft();
   Serial.println(left);
   right += encoders.getCountsAndResetRight();
@@ -95,6 +85,7 @@ void MotorCalibratie(){
   }
 }
 
+//printReadingsToSerial print de metingen van de proximty sensors to Serial
 void printReadingsToSerial()
 {
   Serial.print("Afstand: ");
@@ -115,6 +106,8 @@ void printReadingsToSerial()
 
 }
 
+//zoekEindblok laat de Zumo in een richting draaien totdat hij de einbolk ziet, 
+//dan rijdt de Zumo vooruit om het blokje uit de cirkel te duwen totdat hij de lijn van de cirkel ziet
 void zoekEindblok() {
   Serial.println("zoeken");
   motor.verander_snelheid(200, 200);
@@ -150,11 +143,5 @@ void zoekEindblok() {
     middle = lineSensorValues[2];
   }
   
-  // left += encoders.getCountsAndResetLeft();
-  // Serial.println(left);
-  // right += encoders.getCountsAndResetRight();
-  // Serial.println(right);
-  // MotorCalibratie();
-  //delay(3000);
   motor.noodstop();
 }
