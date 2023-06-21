@@ -1,13 +1,12 @@
-#include "Gyro.h"
-Zumo32U4IMU gyro; 
+#include "Gyro.h" 
 
 /**
  * @brief Constructor for the Gyro class.
  * Initializes private member variables.
  */
 Gyro::Gyro() {
-    sensor.init();
-    sensor.enableDefault();
+    gyro.init();
+    gyro.enableDefault();
 }
 
 /**
@@ -18,14 +17,14 @@ Gyro::Gyro() {
 */
 bool isHelling() {
     gyro.readAcc();
-    int x = sensor.a.x / 100;
+    int x = gyro.a.x / 100;
     if (x > 30) {
         Serial.println("helling omhoog");
         return true;
     }
     else if (x < -30) {
         Serial.println("helling omlaag");
-        return truel
+        return true;
     }
     else {
         //Serial.println("geen helling");
