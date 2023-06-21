@@ -25,7 +25,7 @@ bool isHelling() {
     }
     else if (x < -30) {
         Serial.println("helling omlaag");
-        return truel
+        return true;
     }
     else {
         //Serial.println("geen helling");
