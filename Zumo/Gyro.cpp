@@ -5,8 +5,8 @@
  * Initializes private member variables.
  */
 Gyro::Gyro() {
-    gyro.init();
-    gyro.enableDefault();
+    internalGyro.init();
+    internalGyro.enableDefault();
 }
 
 /**
@@ -16,14 +16,14 @@ Gyro::Gyro() {
   @return true if the device is tilted, false otherwise.
 */
 bool Gyro::isHelling() {
-    gyro.readAcc();
-    int x = gyro.a.x / 100;
+    internalGyro.readAcc();
+    int x = internalGyro.a.x / 100;
     if (x > 30) {
-        Serial.println("helling omhoog");
+//        Serial.println("helling omhoog");
         return true;
     }
     else if (x < -30) {
-        Serial.println("helling omlaag");
+//        Serial.println("helling omlaag");
         return true;
     }
     else {

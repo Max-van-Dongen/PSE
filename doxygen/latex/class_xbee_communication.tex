@@ -14,9 +14,8 @@ void {\bfseries loop} ()
 \begin{DoxyCompactList}\small\item\em Main loop for handling XBee communication. Checks if there are any incoming messages, reads the incoming byte, and handles the message. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{class_xbee_communication_a2087a49d1d7c05dfa53bd82ba0d3bd87}{Handle\+Special\+Messages}} (const String \&msg)
 \begin{DoxyCompactList}\small\item\em Handles special messages from the XBee communication. It toggles receiving mode on and off, switches before and after semicolon, and constructs the message part. \end{DoxyCompactList}\item 
-\Hypertarget{class_xbee_communication_aa0473cf587e5fa70ab0dfc5178462f59}\label{class_xbee_communication_aa0473cf587e5fa70ab0dfc5178462f59} 
-void {\bfseries Internal\+Functions} (String \&var, String \&arg)
-\end{DoxyCompactItemize}
+void \mbox{\hyperlink{class_xbee_communication_aa0473cf587e5fa70ab0dfc5178462f59}{Internal\+Functions}} (String \&var, String \&arg)
+\begin{DoxyCompactList}\small\item\em Handles internal function calls based on incoming commands from the XBee communication. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -45,6 +44,25 @@ Handles special messages from the XBee communication. It toggles receiving mode 
 
 \begin{DoxyParams}{Parameters}
 {\em msg} & The incoming message string to handle. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_xbee_communication_aa0473cf587e5fa70ab0dfc5178462f59}\label{class_xbee_communication_aa0473cf587e5fa70ab0dfc5178462f59} 
+\index{XbeeCommunication@{XbeeCommunication}!InternalFunctions@{InternalFunctions}}
+\index{InternalFunctions@{InternalFunctions}!XbeeCommunication@{XbeeCommunication}}
+\doxysubsubsection{\texorpdfstring{InternalFunctions()}{InternalFunctions()}}
+{\footnotesize\ttfamily void Xbee\+Communication\+::\+Internal\+Functions (\begin{DoxyParamCaption}\item[{String \&}]{var,  }\item[{String \&}]{arg }\end{DoxyParamCaption})}
+
+
+
+Handles internal function calls based on incoming commands from the XBee communication. 
+
+The method controls the robot\textquotesingle{}s motor speeds, enables/disables line tracking, and calibrates the line follower sensor based on specific command inputs.
+
+
+\begin{DoxyParams}{Parameters}
+{\em var} & The command input as a String. It can take values such as \"{}w\"{}, \"{}a\"{}, \"{}s\"{}, \"{}d\"{}, \"{}e\"{}, \"{}ls\"{}, \"{}rs\"{}, \"{}c\"{}, and \"{}q\"{}. \\
+\hline
+{\em arg} & The argument for the command. For motor speed commands, it\textquotesingle{}s the desired speed. For calibration and line tracking commands, it\textquotesingle{}s not used. \\
 \hline
 \end{DoxyParams}
 

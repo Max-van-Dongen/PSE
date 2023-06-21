@@ -76,22 +76,21 @@ $(function() {
   <div class="headertitle"><div class="title">Gyro.h</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef LINE_FOLLOWING_H</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define LINE_FOLLOWING_H</span></div>
+<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef GYRO_H</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define GYRO_H</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;Zumo32U4.h&gt;</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;Zumo32U4.h&gt;</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno"><a class="line" href="class_gyro.html">    7</a></span><span class="keyword">class </span><a class="code hl_class" href="class_gyro.html">Gyro</a> {</div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>  <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>    <a class="code hl_function" href="class_gyro.html#a8ff2fdb2417c677f4694fa23fc0ce6da">Gyro</a>();</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="class_gyro.html#a262ab5d7dc2e7beaad90e34211626b08">isHelling</a>();</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>  <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    Zumo32U4IMU gyro;</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>};</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#endif</span></div>
-<div class="ttc" id="aclass_gyro_html"><div class="ttname"><a href="class_gyro.html">Gyro</a></div><div class="ttdef"><b>Definition</b> Gyro.h:7</div></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno"><a class="line" href="class_gyro.html">    6</a></span><span class="keyword">class </span><a class="code hl_class" href="class_gyro.html">Gyro</a> {</div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>  <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>    <a class="code hl_function" href="class_gyro.html#a8ff2fdb2417c677f4694fa23fc0ce6da">Gyro</a>();</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="class_gyro.html#a262ab5d7dc2e7beaad90e34211626b08">isHelling</a>();</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>  <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    Zumo32U4IMU internalGyro;</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>};</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="aclass_gyro_html"><div class="ttname"><a href="class_gyro.html">Gyro</a></div><div class="ttdef"><b>Definition</b> Gyro.h:6</div></div>
 <div class="ttc" id="aclass_gyro_html_a262ab5d7dc2e7beaad90e34211626b08"><div class="ttname"><a href="class_gyro.html#a262ab5d7dc2e7beaad90e34211626b08">Gyro::isHelling</a></div><div class="ttdeci">bool isHelling()</div><div class="ttdoc">Checks if the device is tilted. This function reads the accelerometer values and determines if the de...</div><div class="ttdef"><b>Definition</b> Gyro.cpp:18</div></div>
 <div class="ttc" id="aclass_gyro_html_a8ff2fdb2417c677f4694fa23fc0ce6da"><div class="ttname"><a href="class_gyro.html#a8ff2fdb2417c677f4694fa23fc0ce6da">Gyro::Gyro</a></div><div class="ttdeci">Gyro()</div><div class="ttdoc">Constructor for the Gyro class. Initializes private member variables.</div><div class="ttdef"><b>Definition</b> Gyro.cpp:7</div></div>
 </div><!-- fragment --></div><!-- contents -->

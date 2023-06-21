@@ -50,7 +50,15 @@ void XbeeCommunication::HandleSpecialMessages(const String &msg)
   }
 }
 
-// INCOMING MESSAGES
+
+/**
+ * @brief Handles internal function calls based on incoming commands from the XBee communication.
+ * 
+ * The method controls the robot's motor speeds, enables/disables line tracking, and calibrates the line follower sensor based on specific command inputs. 
+ * 
+ * @param var The command input as a String. It can take values such as "w", "a", "s", "d", "e", "ls", "rs", "c", and "q".
+ * @param arg The argument for the command. For motor speed commands, it's the desired speed. For calibration and line tracking commands, it's not used.
+ */
 void XbeeCommunication::InternalFunctions(String &var, String &arg)
 {
   if (var == "w")
@@ -110,7 +118,9 @@ void XbeeCommunication::loop()
   if (Serial1.available())
   {                                     // Check if there is any incoming data
     char incomingChar = Serial1.read(); // Read the incoming byte
-    HandleSpecialMessages((String)incomingChar);
+    String incomingString;
+    incomingString = incomingChar;//hoogtepunt van mijn programmeer leven dit
+    HandleSpecialMessages(incomingString);
   }
   if (gotMessage)
   {

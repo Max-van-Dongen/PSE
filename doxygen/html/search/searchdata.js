@@ -1,7 +1,7 @@
 var indexSectionsWithContent =
 {
-  0: "cghilpsx",
-  1: "glpx",
+  0: "cghilsx",
+  1: "glx",
   2: "cghilsx"
 };
 

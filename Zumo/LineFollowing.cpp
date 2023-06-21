@@ -1,6 +1,4 @@
 #include "LineFollowing.h"
-Zumo32U4LineSensors lineSensors;
-Zumo32U4Motors motorss;
 
 /**
  * @brief Constructor for the LineFollowing class.
@@ -66,6 +64,7 @@ void LineFollowing::loopLine() {
       lastLineTime = millis();
       lineSensors.readCalibrated(lineSensorValues);
       if (FollowLine) {
+        while (gyro.isHelling()) {}//loop untill helling gone
         uint16_t farleft = lineSensorValues[0];
         uint16_t left = lineSensorValues[1];
         uint16_t middle = lineSensorValues[2];

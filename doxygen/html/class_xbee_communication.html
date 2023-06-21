@@ -94,8 +94,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>loop</b> ()</td></tr>
 <tr class="memitem:a2087a49d1d7c05dfa53bd82ba0d3bd87"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_xbee_communication.html#a2087a49d1d7c05dfa53bd82ba0d3bd87">HandleSpecialMessages</a> (const String &amp;msg)</td></tr>
 <tr class="memdesc:a2087a49d1d7c05dfa53bd82ba0d3bd87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handles special messages from the XBee communication. It toggles receiving mode on and off, switches before and after semicolon, and constructs the message part.  <br /></td></tr>
 <tr class="separator:a2087a49d1d7c05dfa53bd82ba0d3bd87"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa0473cf587e5fa70ab0dfc5178462f59"><td class="memItemLeft" align="right" valign="top"><a id="aa0473cf587e5fa70ab0dfc5178462f59" name="aa0473cf587e5fa70ab0dfc5178462f59"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>InternalFunctions</b> (String &amp;var, String &amp;arg)</td></tr>
+<tr class="memitem:aa0473cf587e5fa70ab0dfc5178462f59"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_xbee_communication.html#aa0473cf587e5fa70ab0dfc5178462f59">InternalFunctions</a> (String &amp;var, String &amp;arg)</td></tr>
+<tr class="memdesc:aa0473cf587e5fa70ab0dfc5178462f59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handles internal function calls based on incoming commands from the XBee communication.  <br /></td></tr>
 <tr class="separator:aa0473cf587e5fa70ab0dfc5178462f59"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
@@ -131,6 +131,44 @@ String&#160;</td><td class="memItemRight" valign="bottom"><b>recievedArg</b></td
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">msg</td><td>The incoming message string to handle. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aa0473cf587e5fa70ab0dfc5178462f59" name="aa0473cf587e5fa70ab0dfc5178462f59"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa0473cf587e5fa70ab0dfc5178462f59">&#9670;&#160;</a></span>InternalFunctions()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void XbeeCommunication::InternalFunctions </td>
+          <td>(</td>
+          <td class="paramtype">String &amp;&#160;</td>
+          <td class="paramname"><em>var</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">String &amp;&#160;</td>
+          <td class="paramname"><em>arg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Handles internal function calls based on incoming commands from the XBee communication. </p>
+<p>The method controls the robot's motor speeds, enables/disables line tracking, and calibrates the line follower sensor based on specific command inputs.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">var</td><td>The command input as a String. It can take values such as "w", "a", "s", "d", "e", "ls", "rs", "c", and "q". </td></tr>
+    <tr><td class="paramname">arg</td><td>The argument for the command. For motor speed commands, it's the desired speed. For calibration and line tracking commands, it's not used. </td></tr>
   </table>
   </dd>
 </dl>
