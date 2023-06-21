@@ -15,7 +15,7 @@ Gyro::Gyro() {
   It compares the X-axis acceleration value to predefined thresholds to determine the tilt direction.
   @return true if the device is tilted, false otherwise.
 */
-bool isHelling() {
+bool Gyro::isHelling() {
     gyro.readAcc();
     int x = gyro.a.x / 100;
     if (x > 30) {

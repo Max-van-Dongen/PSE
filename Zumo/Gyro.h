@@ -7,7 +7,7 @@
 class Gyro {
   public:
     Gyro();
-    void isHelling();
+    bool isHelling();
   private:
     Zumo32U4IMU gyro;
 };

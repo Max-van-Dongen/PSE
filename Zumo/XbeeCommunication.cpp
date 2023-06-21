@@ -51,20 +51,8 @@ void XbeeCommunication::HandleSpecialMessages(const String &msg)
 }
 
 // INCOMING MESSAGES
-void InternalFunctions(String &var, String &arg)
+void XbeeCommunication::InternalFunctions(String &var, String &arg)
 {
-  if (var == "AAA")
-  {
-    buzzer.play("g32");
-    delay(arg.toInt());
-    buzzer.play("e32");
-  }
-  if (var == "BBB")
-  {
-    buzzer.play("e32");
-    delay(arg.toInt());
-    buzzer.play("f32");
-  }
   if (var == "w")
   {
     motors.setSpeeds(arg.toInt(), arg.toInt());
@@ -93,23 +81,6 @@ void InternalFunctions(String &var, String &arg)
   { // RightSpeed
     motors.setRightSpeed(arg.toInt() ? arg.toInt() : 0);
   }
-  if (var == "hb")
-  { // HeartBeat
-    Serial1.println("*hb:" + ((String)ctr) + "*");
-    ctr++;
-  }
-  if (var == "init")
-  {                                                                         // Init Sensors
-    Serial1.println("*initls:" + ((String)LineFollower.runLines) + "*");    // Init Line Sensors
-    Serial1.println("*initps:" + ((String)runDistance) + "*");              // Init Prox Sensors
-    Serial1.println("*initfls:" + ((String)LineFollower.FollowLine) + "*"); // Init Prox Sensors
-    Serial1.println("*initclb:" + ((String)LineFollower.calibrated) + "*"); // Init Prox Sensors
-  }
-  if (var == "|")
-  {
-    motors.setSpeeds(0, 0);
-    resetFunc();
-  }
   if (var == "c")
   {
     Serial1.println("Sensors: Start");
@@ -128,39 +99,6 @@ void InternalFunctions(String &var, String &arg)
       Serial1.println("Stop Line Tracking");
     }
   }
-  if (var == "lspd")
-  {
-    LineFollower.LineSpeed = arg.toInt();
-  }
-  if (var == "fl")
-  {
-    LineFollower.FollowLine = !LineFollower.FollowLine;
-    if (LineFollower.FollowLine)
-    {
-      Serial1.println("Start Line Following");
-    }
-    else
-    {
-      Serial1.println("Stop Line Following");
-      motors.setSpeeds(0, 0);
-    }
-  }
-  if (var == "l")
-  {
-    runDistance = !runDistance;
-    if (runDistance)
-    {
-      Serial1.println("Start Distance Tracking");
-    }
-    else
-    {
-      Serial1.println("Stop Distance Tracking");
-    }
-  }
-  if (var == "h")
-  {
-    buzzer.play("!T240 V10 L8 a gafaeada c+adaeafa >aa>bac#ada c#adaeaf4");
-  }
 }
 
 /**
@@ -174,9 +112,9 @@ void XbeeCommunication::loop()
     char incomingChar = Serial1.read(); // Read the incoming byte
     HandleSpecialMessages((String)incomingChar);
   }
-  if (xbee.gotMessage)
+  if (gotMessage)
   {
-    xbee.gotMessage = false;
-    InternalFunctions(xbee.recievedVar, xbee.recievedArg);
+    gotMessage = false;
+    InternalFunctions(recievedVar, recievedArg);
   }
 }
