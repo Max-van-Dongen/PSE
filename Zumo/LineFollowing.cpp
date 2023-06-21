@@ -52,11 +52,6 @@ void LineFollowing::loopLine() {
     if ((uint16_t)(millis() - lastLinePrintTime) >= 500)//runt elke 500ms
     {
       lastLinePrintTime = millis();
-      Serial1.println("*LSL:" + (String)lineSensorValues[0] + "*");
-      Serial1.println("*LSML:" + (String)lineSensorValues[1] + "*");
-      Serial1.println("*LSM:" + (String)lineSensorValues[2] + "*");
-      Serial1.println("*LSMR:" + (String)lineSensorValues[3] + "*");
-      Serial1.println("*LSR:" + (String)lineSensorValues[4] + "*");
     }
     if ((uint16_t)(millis() - lastLineTime) >= 10)//runt elke 200ms TODO: optimize??? 50ms mischien beter als we sneller gaan?
     {
@@ -97,8 +92,7 @@ void LineFollowing::loopLine() {
             maxright = 0;
           }
           if (foundleft) {
-            Serial1.println("!!AA" + (String)maxleft + "");
-            if (maxleft >= 50 && maxleft <= 100) {//greer
+            if (maxleft >= 50 && maxleft <= 100) {//groen links
               Serial1.println("GROEEEEEEEEN");
               Serial1.println("GROEEEEEEEEN");
               Serial1.println("GROEEEEEEEEN");
@@ -108,8 +102,7 @@ void LineFollowing::loopLine() {
           }
 
           if (foundright) {
-            Serial1.println("!!AA" + (String)maxright + "");
-            if (maxright >= 50 && maxright <= 100) {//greer
+            if (maxright >= 50 && maxright <= 100) {//groen rechts
               Serial1.println("GROEEEEEEEEN");
               Serial1.println("GROEEEEEEEEN");
               Serial1.println("GROEEEEEEEEN");
