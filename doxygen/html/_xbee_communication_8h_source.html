@@ -80,27 +80,42 @@ $(function() {
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define XBEECOMMUNICATION_H</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;Arduino.h&gt;</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno"><a class="line" href="class_xbee_communication.html">    6</a></span><span class="keyword">class </span><a class="code hl_class" href="class_xbee_communication.html">XbeeCommunication</a> {</div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>  <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>    <a class="code hl_function" href="class_xbee_communication.html#af76d8aa8be3c8dc88841e49f027ae79c">XbeeCommunication</a>();</div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_xbee_communication.html#ab0599663b8dfc4ca8b9ad5888929fbfb">setup</a>();</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_xbee_communication.html#ae103ef73f4fc1d3a2bd250a6cbdaf856">loop</a>();</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_xbee_communication.html#a2087a49d1d7c05dfa53bd82ba0d3bd87">HandleSpecialMessages</a>(<span class="keyword">const</span> String &amp;msg);</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    <span class="keywordtype">bool</span> gotMessage;</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    String recievedVar;</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    String recievedArg;</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>  <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    String messagePart;</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <span class="keywordtype">bool</span> receiving;</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <span class="keywordtype">bool</span> beforesemicolon;</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>};</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#endif</span></div>
-<div class="ttc" id="aclass_xbee_communication_html"><div class="ttname"><a href="class_xbee_communication.html">XbeeCommunication</a></div><div class="ttdef"><b>Definition</b> XbeeCommunication.h:6</div></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;Zumo32U4.h&gt;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;LineFollowing.h&quot;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno"><a class="line" href="class_xbee_communication.html">    8</a></span><span class="keyword">class </span><a class="code hl_class" href="class_xbee_communication.html">XbeeCommunication</a></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>{</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>  <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    <a class="code hl_function" href="class_xbee_communication.html#af76d8aa8be3c8dc88841e49f027ae79c">XbeeCommunication</a>();</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_xbee_communication.html#ab0599663b8dfc4ca8b9ad5888929fbfb">setup</a>();</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_xbee_communication.html#ae103ef73f4fc1d3a2bd250a6cbdaf856">loop</a>();</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_xbee_communication.html#a2087a49d1d7c05dfa53bd82ba0d3bd87">HandleSpecialMessages</a>(<span class="keyword">const</span> String &amp;msg);</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <span class="keywordtype">bool</span> gotMessage;</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    String recievedVar;</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    String recievedArg;</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <span class="keywordtype">void</span> InternalFunctions(String &amp;var, String &amp;arg);</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>  <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    Zumo32U4ButtonA buttonA;</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    Zumo32U4ButtonB buttonB;</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    Zumo32U4ButtonC buttonC;</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    Zumo32U4ProximitySensors proxSensors;</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    Zumo32U4Motors motors;</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    Zumo32U4Buzzer buzzer;</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    Zumo32U4IMU gyro;</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><a class="code hl_class" href="class_line_following.html">LineFollowing</a> LineFollower;</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    <span class="keywordtype">int</span> ctr = 0;</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    String messagePart;</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    <span class="keywordtype">bool</span> receiving;</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    <span class="keywordtype">bool</span> beforesemicolon;</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>};</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="aclass_line_following_html"><div class="ttname"><a href="class_line_following.html">LineFollowing</a></div><div class="ttdef"><b>Definition</b> LineFollowing.h:8</div></div>
+<div class="ttc" id="aclass_xbee_communication_html"><div class="ttname"><a href="class_xbee_communication.html">XbeeCommunication</a></div><div class="ttdef"><b>Definition</b> XbeeCommunication.h:9</div></div>
 <div class="ttc" id="aclass_xbee_communication_html_a2087a49d1d7c05dfa53bd82ba0d3bd87"><div class="ttname"><a href="class_xbee_communication.html#a2087a49d1d7c05dfa53bd82ba0d3bd87">XbeeCommunication::HandleSpecialMessages</a></div><div class="ttdeci">void HandleSpecialMessages(const String &amp;msg)</div><div class="ttdoc">Handles special messages from the XBee communication. It toggles receiving mode on and off,...</div><div class="ttdef"><b>Definition</b> XbeeCommunication.cpp:24</div></div>
-<div class="ttc" id="aclass_xbee_communication_html_ab0599663b8dfc4ca8b9ad5888929fbfb"><div class="ttname"><a href="class_xbee_communication.html#ab0599663b8dfc4ca8b9ad5888929fbfb">XbeeCommunication::setup</a></div><div class="ttdeci">void setup()</div><div class="ttdoc">Set up the XBee communication. Initializes the serial communication for XBee at a baud rate of 115200...</div><div class="ttdef"><b>Definition</b> XbeeCommunication.cpp:14</div></div>
-<div class="ttc" id="aclass_xbee_communication_html_ae103ef73f4fc1d3a2bd250a6cbdaf856"><div class="ttname"><a href="class_xbee_communication.html#ae103ef73f4fc1d3a2bd250a6cbdaf856">XbeeCommunication::loop</a></div><div class="ttdeci">void loop()</div><div class="ttdoc">Main loop for handling XBee communication. Checks if there are any incoming messages,...</div><div class="ttdef"><b>Definition</b> XbeeCommunication.cpp:52</div></div>
+<div class="ttc" id="aclass_xbee_communication_html_ab0599663b8dfc4ca8b9ad5888929fbfb"><div class="ttname"><a href="class_xbee_communication.html#ab0599663b8dfc4ca8b9ad5888929fbfb">XbeeCommunication::setup</a></div><div class="ttdeci">void setup()</div><div class="ttdoc">Set up the XBee communication. Initializes the serial communication for XBee at a baud rate of 115200...</div><div class="ttdef"><b>Definition</b> XbeeCommunication.cpp:13</div></div>
+<div class="ttc" id="aclass_xbee_communication_html_ae103ef73f4fc1d3a2bd250a6cbdaf856"><div class="ttname"><a href="class_xbee_communication.html#ae103ef73f4fc1d3a2bd250a6cbdaf856">XbeeCommunication::loop</a></div><div class="ttdeci">void loop()</div><div class="ttdoc">Main loop for handling XBee communication. Checks if there are any incoming messages,...</div><div class="ttdef"><b>Definition</b> XbeeCommunication.cpp:108</div></div>
 <div class="ttc" id="aclass_xbee_communication_html_af76d8aa8be3c8dc88841e49f027ae79c"><div class="ttname"><a href="class_xbee_communication.html#af76d8aa8be3c8dc88841e49f027ae79c">XbeeCommunication::XbeeCommunication</a></div><div class="ttdeci">XbeeCommunication()</div><div class="ttdoc">Constructor for the XbeeCommunication class. Initializes private member variables.</div><div class="ttdef"><b>Definition</b> XbeeCommunication.cpp:7</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

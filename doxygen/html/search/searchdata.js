@@ -1,8 +1,8 @@
 var indexSectionsWithContent =
 {
-  0: "chlpsx",
-  1: "lpx",
-  2: "chlsx"
+  0: "cghilpsx",
+  1: "glpx",
+  2: "cghilsx"
 };
 
 var indexSectionNames =

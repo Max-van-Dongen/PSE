@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['linefollowing_0',['LineFollowing',['../class_line_following.html',1,'']]]
+  ['gyro_0',['Gyro',['../class_gyro.html',1,'']]]
 ];

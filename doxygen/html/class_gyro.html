@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.7"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Zumo Project: Zumo Directory Reference</title>
+<title>Zumo Project: Gyro Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -67,27 +67,50 @@ $(function() {
 </div>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><a class="el" href="dir_187cade3614a7d6717ec20c39413a03b.html">Zumo</a></li>  </ul>
-</div>
 </div><!-- top -->
 <div class="header">
-  <div class="headertitle"><div class="title">Zumo Directory Reference</div></div>
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="class_gyro-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">Gyro Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="files" name="files"></a>
-Files</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="_gyro_8h_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><b>Gyro.h</b></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="_line_following_8h_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><b>LineFollowing.h</b></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="_proximity_sensors_8h_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><b>ProximitySensors.h</b></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="_xbee_communication_8h_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><b>XbeeCommunication.h</b></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a8ff2fdb2417c677f4694fa23fc0ce6da"><td class="memItemLeft" align="right" valign="top"><a id="a8ff2fdb2417c677f4694fa23fc0ce6da" name="a8ff2fdb2417c677f4694fa23fc0ce6da"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Gyro</b> ()</td></tr>
+<tr class="memdesc:a8ff2fdb2417c677f4694fa23fc0ce6da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for the <a class="el" href="class_gyro.html">Gyro</a> class. Initializes private member variables. <br /></td></tr>
+<tr class="separator:a8ff2fdb2417c677f4694fa23fc0ce6da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a262ab5d7dc2e7beaad90e34211626b08"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gyro.html#a262ab5d7dc2e7beaad90e34211626b08">isHelling</a> ()</td></tr>
+<tr class="memdesc:a262ab5d7dc2e7beaad90e34211626b08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the device is tilted. This function reads the accelerometer values and determines if the device is tilted. It compares the X-axis acceleration value to predefined thresholds to determine the tilt direction.  <br /></td></tr>
+<tr class="separator:a262ab5d7dc2e7beaad90e34211626b08"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a262ab5d7dc2e7beaad90e34211626b08" name="a262ab5d7dc2e7beaad90e34211626b08"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a262ab5d7dc2e7beaad90e34211626b08">&#9670;&#160;</a></span>isHelling()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Gyro::isHelling </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Checks if the device is tilted. This function reads the accelerometer values and determines if the device is tilted. It compares the X-axis acceleration value to predefined thresholds to determine the tilt direction. </p>
+<dl class="section return"><dt>Returns</dt><dd>true if the device is tilted, false otherwise. </dd></dl>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
+<li>Zumo/<a class="el" href="_gyro_8h_source.html">Gyro.h</a></li>
+<li>Zumo/Gyro.cpp</li>
+</ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

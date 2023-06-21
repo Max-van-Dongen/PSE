@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['handlespecialmessages_0',['HandleSpecialMessages',['../class_xbee_communication.html#a2087a49d1d7c05dfa53bd82ba0d3bd87',1,'XbeeCommunication']]]
+  ['gyro_0',['Gyro',['../class_gyro.html#a8ff2fdb2417c677f4694fa23fc0ce6da',1,'Gyro']]]
 ];
