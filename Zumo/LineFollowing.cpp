@@ -1,23 +1,23 @@
 #include "LineFollowing.h"
 
 /**
- * @brief Constructor for the LineFollowing class.
- * Initializes private member variables.
- */
+   @brief Constructor for the LineFollowing class.
+   Initializes private member variables.
+*/
 LineFollowing::LineFollowing() : FollowLine(false), calibrated(false), lastLineTime(0), lastLinePrintTime(0) {}
 
 /**
- * @brief Method to setup line sensors.
- * Initializes five line sensors on the Zumo 32U4 robot.
- */
+   @brief Method to setup line sensors.
+   Initializes five line sensors on the Zumo 32U4 robot.
+*/
 void LineFollowing::setupLine() {
   lineSensors.initFiveSensors();
 }
 
 /**
- * @brief Calibrate line sensors and motors.
- * Uses a fixed routine to calibrate the line sensors and motors based on the environment.
- */
+   @brief Calibrate line sensors and motors.
+   Uses a fixed routine to calibrate the line sensors and motors based on the environment.
+*/
 void LineFollowing::calibratee() {
   for (uint16_t i = 0; i < 120; i++)
   {
@@ -42,9 +42,9 @@ int maxright = 0;
 bool foundright = false;
 
 /**
- * @brief Main loop for line following logic.
- * Contains the core algorithm for line following, sensor readings, motor control, etc.
- */
+   @brief Main loop for line following logic.
+   Contains the core algorithm for line following, sensor readings, motor control, etc.
+*/
 void LineFollowing::loopLine() {
 
   int CornerSpeed = LineSpeed * .7;
@@ -64,7 +64,6 @@ void LineFollowing::loopLine() {
       lastLineTime = millis();
       lineSensors.readCalibrated(lineSensorValues);
       if (FollowLine) {
-        while (gyro.isHelling()) {}//loop untill helling gone
         uint16_t farleft = lineSensorValues[0];
         uint16_t left = lineSensorValues[1];
         uint16_t middle = lineSensorValues[2];
@@ -76,29 +75,26 @@ void LineFollowing::loopLine() {
             maxleft = farleft;
           }
         }
-        
+
         if (farright > 50) {
           foundright = true;
           if (farright > maxright) {
             maxright = farright;
           }
         }
-        
+
         if ((foundleft && farleft < 50) || (foundright && farright < 50)) {
           if (foundleft && foundright) {
             if (maxleft >= 250 && maxleft <= 285) {//grijs
               Serial1.println("GRIJS");
               Serial1.println("GRIJS");
               Serial1.println("GRIJS");
-              motorss.setSpeeds(0, 0);
-              delay(2000);
+              while (gyro.isHelling()) {}//wait untill helling gone
             }
             maxleft = 0;
             foundleft = false;
             foundright = false;
             maxright = 0;
-
-            
           }
           if (foundleft) {
             Serial1.println("!!AA" + (String)maxleft + "");
@@ -110,7 +106,7 @@ void LineFollowing::loopLine() {
             maxleft = 0;
             foundleft = false;
           }
-          
+
           if (foundright) {
             Serial1.println("!!AA" + (String)maxright + "");
             if (maxright >= 50 && maxright <= 100) {//greer
