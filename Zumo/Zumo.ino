@@ -7,6 +7,7 @@ Zumo32U4ButtonC buttonC;
 Zumo32U4ProximitySensors proxSensors;
 Zumo32U4Motors motors;
 Zumo32U4Buzzer buzzer;
+Zumo32U4IMU gyro; 
 XbeeCommunication xbee;
 LineFollowing LineFollower;
 
@@ -23,7 +24,9 @@ bool proxFrontActive;
 bool proxRightActive;
 //End Of Distance Sensor Variables
 
-
+//gyro vars
+int gyroCounter = 0;
+//end of gyro vars
 
 struct ArgVal {
   String arg;
@@ -43,6 +46,10 @@ void setup() {
   proxSensors.initThreeSensors();
   uint16_t BLevels[] = {1, 2, 4, 9, 15, 23, 32, 42, 55, 70, 85, 100, 120, 135, 150, 170};   // default is { 4, 15, 32, 55, 85, 120 }
   proxSensors.setBrightnessLevels(BLevels, 16);
+
+  //gyro setup
+  gyro.init();
+  gyro.enableDefault();
 }
 
 
@@ -77,6 +84,26 @@ void DistanceTracking() {
   }
 }
 //END OF DISTANCE SENSORS
+
+//START OF GYRO SENSORS
+bool isHelling() {
+    gyro.readAcc();
+    int x = sensor.a.x / 100;
+    if (x > 30) {
+        Serial.println("helling omhoog");
+        return true;
+    }
+    else if (x < -30) {
+        Serial.println("helling omlaag");
+        return truel
+    }
+    else {
+        //Serial.println("geen helling");
+        return false;
+    }
+
+}
+//END OF GYRO SENSORS
 
 //INCOMING MESSAGES
 int ctr = 0;
@@ -191,6 +218,16 @@ void loop() {
   }
   //END OF DEBUG BUTTONS
 
+
+  if (gyroCounter > 300) {
+    if (isHelling()) {
+      motors.setSpeeds(100, 100);
+    }
+    gyroCounter = 0;
+  } else {
+    motors.setSpeeds(200, 200);
+  }
+  gyroCounter++
 
   //Handle External Functions
   LineFollower.loopLine();
