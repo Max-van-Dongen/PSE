@@ -1,12 +1,12 @@
-#include "Gyro.h" 
+#include "Gyro.h"
 
 /**
- * @brief Constructor for the Gyro class.
- * Initializes private member variables.
- */
+   @brief Constructor for the Gyro class.
+   Initializes private member variables.
+*/
 Gyro::Gyro() {
-    internalGyro.init();
-    internalGyro.enableDefault();
+  internalGyro.init();
+  internalGyro.enableDefault();
 }
 
 /**
@@ -16,19 +16,26 @@ Gyro::Gyro() {
   @return true if the device is tilted, false otherwise.
 */
 bool Gyro::isHelling() {
-    internalGyro.readAcc();
-    int x = internalGyro.a.x / 100;
-    if (x > 30) {
-//        Serial.println("helling omhoog");
-        return true;
-    }
-    else if (x < -30) {
-//        Serial.println("helling omlaag");
-        return true;
-    }
-    else {
-        //Serial.println("geen helling");
-        return false;
-    }
+  // Read the acceleration data from the internal gyroscope
+  internalGyro.readAcc();
+
+  // Calculate the acceleration along the x-axis by dividing the raw value by 100
+  int x = internalGyro.a.x / 100;
+
+  // If acceleration in the x direction is greater than 30, interpret this as an upward slope
+  if (x > 30) {
+    //    Serial.println("Upward slope"); // Can print to the serial monitor for debugging
+    return true; // Indicate presence of an upward slope
+  }
+  // If acceleration in the x direction is less than -30, interpret this as a downward slope
+  else if (x < -30) {
+    //    Serial.println("Downward slope"); // Can print to the serial monitor for debugging
+    return true; // Indicate presence of a downward slope
+  }
+  else {
+    //    Serial.println("No slope"); // Can print to the serial monitor for debugging
+    return false; // Indicate no slope detected
+  }
+
 
 }
