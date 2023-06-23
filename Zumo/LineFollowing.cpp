@@ -36,17 +36,12 @@ void LineFollowing::calibratee() {
   calibrated = true;
 }
 
-int maxleft = 0;
-bool foundleft = false;
-int maxright = 0;
-bool foundright = false;
 
 /**
    @brief Main loop for line following logic.
    Contains the core algorithm for line following, sensor readings, motor control, etc.
 */
 void LineFollowing::loopLine() {
-
   int CornerSpeed = LineSpeed * .7;
   if (runLines) {
     if ((uint16_t)(millis() - lastLinePrintTime) >= 500)//runt elke 500ms

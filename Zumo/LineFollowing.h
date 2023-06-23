@@ -26,5 +26,9 @@ class LineFollowing
     uint16_t lastLinePrintTime = 0;
     Zumo32U4LineSensors lineSensors;
     Zumo32U4Motors motorss;
+    int maxleft = 0;
+    bool foundleft = false;
+    int maxright = 0;
+    bool foundright = false;
 };
 #endif
