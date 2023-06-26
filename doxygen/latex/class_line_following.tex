@@ -9,9 +9,8 @@ void {\bfseries calibratee} ()
 \Hypertarget{class_line_following_a576f5ebc65be9a386e7add1c3263edfa}\label{class_line_following_a576f5ebc65be9a386e7add1c3263edfa} 
 {\bfseries Line\+Following} ()
 \begin{DoxyCompactList}\small\item\em Constructor for the \doxylink{class_line_following}{Line\+Following} class. Initializes private member variables. \end{DoxyCompactList}\item 
-\Hypertarget{class_line_following_a5284b3b35b99b4b9770dbff9473f0c76}\label{class_line_following_a5284b3b35b99b4b9770dbff9473f0c76} 
-void {\bfseries loop\+Line} ()
-\begin{DoxyCompactList}\small\item\em Main loop for line following logic. Contains the core algorithm for line following, sensor readings, motor control, etc. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_line_following_a5284b3b35b99b4b9770dbff9473f0c76}{loop\+Line}} ()
+\begin{DoxyCompactList}\small\item\em Main loop for following lines. \end{DoxyCompactList}\item 
 \Hypertarget{class_line_following_a46340473745c5c1cafc5295d4d184f1b}\label{class_line_following_a46340473745c5c1cafc5295d4d184f1b} 
 void {\bfseries setup\+Line} ()
 \begin{DoxyCompactList}\small\item\em Method to setup line sensors. Initializes five line sensors on the Zumo 32U4 robot. \end{DoxyCompactList}\end{DoxyCompactItemize}
@@ -19,18 +18,31 @@ void {\bfseries setup\+Line} ()
 \begin{DoxyCompactItemize}
 \item 
 \Hypertarget{class_line_following_ac506356a52b61365adc92d898273a9b9}\label{class_line_following_ac506356a52b61365adc92d898273a9b9} 
-bool {\bfseries Follow\+Line} = false
+bool {\bfseries Follow\+Line}
 \item 
 \Hypertarget{class_line_following_aba1858ba01c3ef0151ce4f4774b33208}\label{class_line_following_aba1858ba01c3ef0151ce4f4774b33208} 
-bool {\bfseries run\+Lines} = false
+bool {\bfseries run\+Lines}
 \item 
 \Hypertarget{class_line_following_a915365efaff7a320d7d297e89bca6636}\label{class_line_following_a915365efaff7a320d7d297e89bca6636} 
-bool {\bfseries calibrated} = false
+bool {\bfseries calibrated}
 \item 
 \Hypertarget{class_line_following_aa90b4e3cf438f35815f6523906d9b395}\label{class_line_following_aa90b4e3cf438f35815f6523906d9b395} 
-int {\bfseries Line\+Speed} = 200
+int {\bfseries Line\+Speed}
 \end{DoxyCompactItemize}
 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_line_following_a5284b3b35b99b4b9770dbff9473f0c76}\label{class_line_following_a5284b3b35b99b4b9770dbff9473f0c76} 
+\index{LineFollowing@{LineFollowing}!loopLine@{loopLine}}
+\index{loopLine@{loopLine}!LineFollowing@{LineFollowing}}
+\doxysubsubsection{\texorpdfstring{loopLine()}{loopLine()}}
+{\footnotesize\ttfamily void Line\+Following\+::loop\+Line (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Main loop for following lines. 
+
+This function is responsible for the top-\/level control flow in the line following algorithm, including the initial speed setup and conditional checks. 
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 

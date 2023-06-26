@@ -87,9 +87,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>calibratee</b> ()</td
 &#160;</td><td class="memItemRight" valign="bottom"><b>LineFollowing</b> ()</td></tr>
 <tr class="memdesc:a576f5ebc65be9a386e7add1c3263edfa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for the <a class="el" href="class_line_following.html">LineFollowing</a> class. Initializes private member variables. <br /></td></tr>
 <tr class="separator:a576f5ebc65be9a386e7add1c3263edfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5284b3b35b99b4b9770dbff9473f0c76"><td class="memItemLeft" align="right" valign="top"><a id="a5284b3b35b99b4b9770dbff9473f0c76" name="a5284b3b35b99b4b9770dbff9473f0c76"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>loopLine</b> ()</td></tr>
-<tr class="memdesc:a5284b3b35b99b4b9770dbff9473f0c76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Main loop for line following logic. Contains the core algorithm for line following, sensor readings, motor control, etc. <br /></td></tr>
+<tr class="memitem:a5284b3b35b99b4b9770dbff9473f0c76"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_line_following.html#a5284b3b35b99b4b9770dbff9473f0c76">loopLine</a> ()</td></tr>
+<tr class="memdesc:a5284b3b35b99b4b9770dbff9473f0c76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Main loop for following lines.  <br /></td></tr>
 <tr class="separator:a5284b3b35b99b4b9770dbff9473f0c76"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a46340473745c5c1cafc5295d4d184f1b"><td class="memItemLeft" align="right" valign="top"><a id="a46340473745c5c1cafc5295d4d184f1b" name="a46340473745c5c1cafc5295d4d184f1b"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setupLine</b> ()</td></tr>
@@ -99,18 +98,39 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>setupLine</b> ()</td>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:ac506356a52b61365adc92d898273a9b9"><td class="memItemLeft" align="right" valign="top"><a id="ac506356a52b61365adc92d898273a9b9" name="ac506356a52b61365adc92d898273a9b9"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>FollowLine</b> = false</td></tr>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>FollowLine</b></td></tr>
 <tr class="separator:ac506356a52b61365adc92d898273a9b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aba1858ba01c3ef0151ce4f4774b33208"><td class="memItemLeft" align="right" valign="top"><a id="aba1858ba01c3ef0151ce4f4774b33208" name="aba1858ba01c3ef0151ce4f4774b33208"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>runLines</b> = false</td></tr>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>runLines</b></td></tr>
 <tr class="separator:aba1858ba01c3ef0151ce4f4774b33208"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a915365efaff7a320d7d297e89bca6636"><td class="memItemLeft" align="right" valign="top"><a id="a915365efaff7a320d7d297e89bca6636" name="a915365efaff7a320d7d297e89bca6636"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>calibrated</b> = false</td></tr>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>calibrated</b></td></tr>
 <tr class="separator:a915365efaff7a320d7d297e89bca6636"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa90b4e3cf438f35815f6523906d9b395"><td class="memItemLeft" align="right" valign="top"><a id="aa90b4e3cf438f35815f6523906d9b395" name="aa90b4e3cf438f35815f6523906d9b395"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>LineSpeed</b> = 200</td></tr>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>LineSpeed</b></td></tr>
 <tr class="separator:aa90b4e3cf438f35815f6523906d9b395"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a5284b3b35b99b4b9770dbff9473f0c76" name="a5284b3b35b99b4b9770dbff9473f0c76"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5284b3b35b99b4b9770dbff9473f0c76">&#9670;&#160;</a></span>loopLine()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LineFollowing::loopLine </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Main loop for following lines. </p>
+<p>This function is responsible for the top-level control flow in the line following algorithm, including the initial speed setup and conditional checks. </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>Zumo/<a class="el" href="_line_following_8h_source.html">LineFollowing.h</a></li>
 <li>Zumo/LineFollowing.cpp</li>
